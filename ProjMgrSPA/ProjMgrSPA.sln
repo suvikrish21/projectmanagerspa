@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26228.4
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjMgrSPA", "ProjMgrSPA\ProjMgrSPA.csproj", "{4CB57E21-BADC-4281-BFCD-C923E4A93373}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjMgrAPI", "ProjMgrAPI\ProjMgrAPI.csproj", "{634CAA6B-39CF-4840-9612-A025A8F7BBFA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjMgrAPI.Tests", "ProjMgrAPI.Tests\ProjMgrAPI.Tests.csproj", "{718728BD-F347-4CAC-A6F0-7E1FD0BB37D9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4CB57E21-BADC-4281-BFCD-C923E4A93373}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4CB57E21-BADC-4281-BFCD-C923E4A93373}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4CB57E21-BADC-4281-BFCD-C923E4A93373}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4CB57E21-BADC-4281-BFCD-C923E4A93373}.Release|Any CPU.Build.0 = Release|Any CPU
+		{634CAA6B-39CF-4840-9612-A025A8F7BBFA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{634CAA6B-39CF-4840-9612-A025A8F7BBFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{634CAA6B-39CF-4840-9612-A025A8F7BBFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{634CAA6B-39CF-4840-9612-A025A8F7BBFA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{718728BD-F347-4CAC-A6F0-7E1FD0BB37D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{718728BD-F347-4CAC-A6F0-7E1FD0BB37D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{718728BD-F347-4CAC-A6F0-7E1FD0BB37D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{718728BD-F347-4CAC-A6F0-7E1FD0BB37D9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
