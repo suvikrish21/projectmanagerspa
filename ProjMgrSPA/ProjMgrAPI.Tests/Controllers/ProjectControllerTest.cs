@@ -20,11 +20,12 @@ namespace ProjMgrAPI.Tests.Controllers
         {
             var projctrl = new ProjectsController();
 
-
+           
             var proj = new project()
             {
-                 project1 ="Project ABC"
-
+                 project1 ="Project ABC",
+                 
+                  
             };
 
 
