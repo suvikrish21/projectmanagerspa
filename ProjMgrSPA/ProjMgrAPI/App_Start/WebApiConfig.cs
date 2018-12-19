@@ -10,9 +10,12 @@ namespace ProjMgrAPI
         public static void Register(HttpConfiguration config)
         {
             // Web API configuration and services
+            config.EnableCors();
 
             // Web API routes
             config.MapHttpAttributeRoutes();
+
+            config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new System.Net.Http.Headers.MediaTypeHeaderValue("application/octet-stream"));
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",

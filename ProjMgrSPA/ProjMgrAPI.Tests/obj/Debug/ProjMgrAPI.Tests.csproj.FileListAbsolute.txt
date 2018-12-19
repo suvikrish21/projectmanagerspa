@@ -39,3 +39,6 @@ C:\Users\Admin\Desktop\.NET projects\ProjMngrApp\ProjMgrSPA\ProjMgrAPI.Tests\obj
 C:\Users\Admin\Desktop\.NET projects\ProjMngrApp\ProjMgrSPA\ProjMgrAPI.Tests\obj\Debug\ProjMgrAPI.Tests.pdb
 C:\Users\Admin\Desktop\.NET projects\ProjMngrApp\ProjMgrSPA\ProjMgrAPI.Tests\bin\Debug\EntityFramework.SqlServer.dll
 C:\Users\Admin\Desktop\.NET projects\ProjMngrApp\ProjMgrSPA\ProjMgrAPI.Tests\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\Admin\Desktop\.NET projects\ProjMngrApp\ProjMgrSPA\ProjMgrAPI.Tests\bin\Debug\System.Web.Cors.dll
+C:\Users\Admin\Desktop\.NET projects\ProjMngrApp\ProjMgrSPA\ProjMgrAPI.Tests\bin\Debug\System.Web.Http.Cors.dll
+C:\Users\Admin\Desktop\.NET projects\ProjMngrApp\ProjMgrSPA\ProjMgrAPI.Tests\bin\Debug\System.Web.Http.Cors.xml

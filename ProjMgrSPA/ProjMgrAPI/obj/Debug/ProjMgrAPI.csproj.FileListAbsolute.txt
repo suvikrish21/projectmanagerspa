@@ -72,6 +72,9 @@ C:\Users\Admin\Desktop\.NET projects\ProjMngrApp\ProjMgrSPA\ProjMgrAPI\bin\Micro
 C:\Users\Admin\Desktop\.NET projects\ProjMngrApp\ProjMgrSPA\ProjMgrAPI\bin\Microsoft.AI.ServerTelemetryChannel.xml
 C:\Users\Admin\Desktop\.NET projects\ProjMngrApp\ProjMgrSPA\ProjMgrAPI\bin\Microsoft.AI.WindowsServer.xml
 C:\Users\Admin\Desktop\.NET projects\ProjMngrApp\ProjMgrSPA\ProjMgrAPI\bin\Microsoft.AI.Web.xml
-C:\Users\Admin\Desktop\.NET projects\ProjMngrApp\ProjMgrSPA\ProjMgrAPI\obj\Debug\ProjMgrAPI.csprojResolveAssemblyReference.cache
 C:\Users\Admin\Desktop\.NET projects\ProjMngrApp\ProjMgrSPA\ProjMgrAPI\obj\Debug\ProjMgrAPI.dll
 C:\Users\Admin\Desktop\.NET projects\ProjMngrApp\ProjMgrSPA\ProjMgrAPI\obj\Debug\ProjMgrAPI.pdb
+C:\Users\Admin\Desktop\.NET projects\ProjMngrApp\ProjMgrSPA\ProjMgrAPI\bin\System.Web.Cors.dll
+C:\Users\Admin\Desktop\.NET projects\ProjMngrApp\ProjMgrSPA\ProjMgrAPI\bin\System.Web.Http.Cors.dll
+C:\Users\Admin\Desktop\.NET projects\ProjMngrApp\ProjMgrSPA\ProjMgrAPI\bin\System.Web.Http.Cors.xml
+C:\Users\Admin\Desktop\.NET projects\ProjMngrApp\ProjMgrSPA\ProjMgrAPI\obj\Debug\ProjMgrAPI.csprojResolveAssemblyReference.cache

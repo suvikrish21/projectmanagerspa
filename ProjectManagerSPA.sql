@@ -34,6 +34,8 @@ constraint fk_task_projectid foreign key (project_id) references project(project
 constraint fk_task_parentid foreign key (parent_id) references parent_task(parent_id)
 );
 
+
+select * from users 
 create table users
 (
 user_id int identity(1,1),

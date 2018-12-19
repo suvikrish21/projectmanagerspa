@@ -12,44 +12,44 @@ using ProjMgrAPI.Models;
 
 namespace ProjMgrAPI.Controllers
 {
-    public class UsersAPIController : ApiController
+    public class TasksController : ApiController
     {
         private ProjectManagerSPAEntities db = new ProjectManagerSPAEntities();
 
-        // GET: api/UsersAPI
-        public IQueryable<user> Getusers()
+        // GET: api/Tasks
+        public IQueryable<task> Gettasks()
         {
-            return db.users;
+            return db.tasks;
         }
 
-        // GET: api/UsersAPI/5
-        [ResponseType(typeof(user))]
-        public IHttpActionResult Getuser(int id)
+        // GET: api/Tasks/5
+        [ResponseType(typeof(task))]
+        public IHttpActionResult Gettask(int id)
         {
-            user user = db.users.Find(id);
-            if (user == null)
+            task task = db.tasks.Find(id);
+            if (task == null)
             {
                 return NotFound();
             }
 
-            return Ok(user);
+            return Ok(task);
         }
 
-        // PUT: api/UsersAPI/5
+        // PUT: api/Tasks/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult Putuser(int id, user user)
+        public IHttpActionResult Puttask(int id, task task)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != user.user_id)
+            if (id != task.task_id)
             {
                 return BadRequest();
             }
 
-            db.Entry(user).State = EntityState.Modified;
+            db.Entry(task).State = EntityState.Modified;
 
             try
             {
@@ -57,7 +57,7 @@ namespace ProjMgrAPI.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!userExists(id))
+                if (!taskExists(id))
                 {
                     return NotFound();
                 }
@@ -70,35 +70,49 @@ namespace ProjMgrAPI.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/UsersAPI
-        [ResponseType(typeof(user))]
-        public IHttpActionResult Postuser(user user)
+        // POST: api/Tasks
+        [ResponseType(typeof(task))]
+        public IHttpActionResult Posttask(task task)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.users.Add(user);
+            db.tasks.Add(task);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = user.user_id }, user);
+            return CreatedAtRoute("DefaultApi", new { id = task.task_id }, task);
         }
 
-        // DELETE: api/UsersAPI/5
-        [ResponseType(typeof(user))]
-        public IHttpActionResult Deleteuser(int id)
+        [ResponseType(typeof(parent_task))]
+        public IHttpActionResult Posttask(parent_task task)
         {
-            user user = db.users.Find(id);
-            if (user == null)
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            db.parent_task.Add(task);
+            db.SaveChanges();
+
+            return CreatedAtRoute("DefaultApi", new { id = task.parent_id }, task);
+        }
+
+        // DELETE: api/Tasks/5
+        [ResponseType(typeof(task))]
+        public IHttpActionResult Deletetask(int id)
+        {
+            task task = db.tasks.Find(id);
+            if (task == null)
             {
                 return NotFound();
             }
 
-            db.users.Remove(user);
+            db.tasks.Remove(task);
             db.SaveChanges();
 
-            return Ok(user);
+            return Ok(task);
         }
 
         protected override void Dispose(bool disposing)
@@ -110,9 +124,9 @@ namespace ProjMgrAPI.Controllers
             base.Dispose(disposing);
         }
 
-        private bool userExists(int id)
+        private bool taskExists(int id)
         {
-            return db.users.Count(e => e.user_id == id) > 0;
+            return db.tasks.Count(e => e.task_id == id) > 0;
         }
     }
 }
