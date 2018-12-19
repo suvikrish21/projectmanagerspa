@@ -2,3 +2,8 @@ C:\Users\Admin\Desktop\.NET projects\ProjMngrApp\ProjMgrSPA\ProjMgrSPA\bin\Debug
 C:\Users\Admin\Desktop\.NET projects\ProjMngrApp\ProjMgrSPA\ProjMgrSPA\bin\Debug\netcoreapp1.1\ProjMgrSPA.runtimeconfig.json
 C:\Users\Admin\Desktop\.NET projects\ProjMngrApp\ProjMgrSPA\ProjMgrSPA\bin\Debug\netcoreapp1.1\ProjMgrSPA.runtimeconfig.dev.json
 C:\Users\Admin\Desktop\.NET projects\ProjMngrApp\ProjMgrSPA\ProjMgrSPA\obj\Debug\netcoreapp1.1\ProjMgrSPA.csprojResolveAssemblyReference.cache
+C:\Users\Admin\Desktop\.NET projects\ProjMngrApp\ProjMgrSPA\ProjMgrSPA\bin\Debug\netcoreapp1.1\ProjMgrSPA.dll
+C:\Users\Admin\Desktop\.NET projects\ProjMngrApp\ProjMgrSPA\ProjMgrSPA\bin\Debug\netcoreapp1.1\ProjMgrSPA.pdb
+C:\Users\Admin\Desktop\.NET projects\ProjMngrApp\ProjMgrSPA\ProjMgrSPA\obj\Debug\netcoreapp1.1\ProjMgrSPA.AssemblyInfo.cs
+C:\Users\Admin\Desktop\.NET projects\ProjMngrApp\ProjMgrSPA\ProjMgrSPA\obj\Debug\netcoreapp1.1\ProjMgrSPA.dll
+C:\Users\Admin\Desktop\.NET projects\ProjMngrApp\ProjMgrSPA\ProjMgrSPA\obj\Debug\netcoreapp1.1\ProjMgrSPA.pdb
