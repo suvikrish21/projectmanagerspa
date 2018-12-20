@@ -22,7 +22,7 @@ namespace ProjMgrAPI.Controllers
         // GET: api/Users
         public IQueryable<user> Getusers()
         {
-            return db.users;
+            return db.users.Where(u=> u.project_id == null & u.task_id == null);
         }
 
         // GET: api/Users/5

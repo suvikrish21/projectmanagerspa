@@ -9,9 +9,11 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using ProjMgrAPI.Models;
+using System.Web.Http.Cors;
 
 namespace ProjMgrAPI.Controllers
 {
+    [EnableCors("*", "*", "*")]
     public class TasksController : ApiController
     {
         private ProjectManagerSPAEntities db = new ProjectManagerSPAEntities();
@@ -85,19 +87,7 @@ namespace ProjMgrAPI.Controllers
             return CreatedAtRoute("DefaultApi", new { id = task.task_id }, task);
         }
 
-        [ResponseType(typeof(parent_task))]
-        public IHttpActionResult Posttask(parent_task task)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            db.parent_task.Add(task);
-            db.SaveChanges();
-
-            return CreatedAtRoute("DefaultApi", new { id = task.parent_id }, task);
-        }
+      
 
         // DELETE: api/Tasks/5
         [ResponseType(typeof(task))]

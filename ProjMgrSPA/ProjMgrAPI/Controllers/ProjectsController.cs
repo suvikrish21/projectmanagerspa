@@ -9,9 +9,11 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using ProjMgrAPI.Models;
+using System.Web.Http.Cors;
 
 namespace ProjMgrAPI.Controllers
 {
+    [EnableCors("*", "*", "*")]
     public class ProjectsController : ApiController
     {
         private ProjectManagerSPAEntities db = new ProjectManagerSPAEntities();
