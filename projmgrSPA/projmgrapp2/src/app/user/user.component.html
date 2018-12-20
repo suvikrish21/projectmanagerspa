@@ -1,0 +1,106 @@
+
+
+
+<div class="container">
+
+
+    <div class="row">
+    <div class="col-md-2">
+        <label for="fname">First Name:  </label>
+    </div>
+
+      <div class="col-md-4">
+        
+         <input class="form-control" type="text" name="fname" [(ngModel)]="user.first_name"  />
+
+      </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-2">
+            <label for="lname">Last Name:  </label>
+        </div>
+        <div class="col-md-4">
+          
+           <input class="form-control" type="text" name="lname" [(ngModel)]="user.last_name" />
+  
+        </div>
+      </div>
+
+
+
+      <div class="row">
+          <div class="col-md-2">
+              <label for="empid">Employee ID:  </label>
+          </div>
+          <div class="col-md-4">
+            
+             <input class="form-control" type="text" name="empid" [(ngModel)]="user.employee_id"  />
+    
+          </div>
+        </div>
+
+       <br/>
+
+        <div class="row">
+            <div class="col-md-3">
+           </div>
+            <div class="col-md-1">
+                <input class="btn" type="button" (click)="addUser()" [(ngModel)]="action" />
+            </div>
+                <div class="col-md-1">
+               <input class="btn" type="button" (click)="resetUser()" value="Reset" />
+        
+            </div>
+          </div>
+
+</div>
+<hr/>
+
+<div *ngIf="userList" class="container">
+  
+
+     <div>
+         <input type="Search" placeholder="Search Users" [(ngModel)]="searchText" />
+     </div>
+
+     <div class="list-group" *ngFor="let usr of userList | userfilter:searchText">
+        
+        <div class="list-group-item">
+
+
+                <div class="row">
+                        <div class="col-md-4">
+
+           
+               {{usr.first_name}} 
+           </div>
+        
+            <div>
+            <button type="button" (click)=editUser(usr.user_id) class="btn">Edit</button>
+            </div>
+            </div>
+       
+        <div class="row">
+                <div class="col-md-4">
+            {{usr.last_name}}
+                </div>
+
+                <div>
+               <button type="button" (click)=deleteUser(usr.user_id) class="btn">Delete</button>
+                </div>
+        </div>
+        <div class="row">
+                <div class="col-md-4">
+            {{usr.emp_id}}
+             </div>
+        </div>
+
+    </div>
+      </div>
+
+
+</div>
+
+
