@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="ProjectManagerSPAModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="ProjectManagerSPAModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="parent_task">
           <Key>
             <PropertyRef Name="parent_id" />
@@ -39,10 +39,10 @@
           <Key>
             <PropertyRef Name="user_id" />
           </Key>
-          <Property Name="user_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="first_name" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="last_name" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="emp_id" Type="int" Nullable="false" />
+          <Property Name="user_id" Type="int" Nullable="false" />
+          <Property Name="first_name" Type="varchar" MaxLength="100" />
+          <Property Name="last_name" Type="varchar" MaxLength="100" />
+          <Property Name="emp_id" Type="int" />
           <Property Name="project_id" Type="int" />
           <Property Name="task_id" Type="int" />
         </EntityType>
@@ -116,8 +116,7 @@
             <End Role="users" EntitySet="users" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ProjectManagerSPAModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -139,7 +138,7 @@
           <Property Name="end_dt" Type="DateTime" Precision="3" />
           <Property Name="priority" Type="Int32" />
           <NavigationProperty Name="tasks" Relationship="Self.fk_task_projectid" FromRole="project" ToRole="task" />
-          <NavigationProperty Name="users" Relationship="Self.fk_user_projectid" FromRole="project" ToRole="users" />
+          <NavigationProperty Name="users" Relationship="ProjectManagerSPAModel.fk_user_projectid" FromRole="project" ToRole="user" />
         </EntityType>
         <EntityType Name="task">
           <Key>
@@ -155,20 +154,7 @@
           <Property Name="status" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="parent_task" Relationship="Self.fk_task_parentid" FromRole="task" ToRole="parent_task" />
           <NavigationProperty Name="project" Relationship="Self.fk_task_projectid" FromRole="task" ToRole="project" />
-          <NavigationProperty Name="users" Relationship="Self.fk_user_taskid" FromRole="task" ToRole="users" />
-        </EntityType>
-        <EntityType Name="user">
-          <Key>
-            <PropertyRef Name="user_id" />
-          </Key>
-          <Property Name="user_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="first_name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="last_name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="emp_id" Type="Int32" Nullable="false" />
-          <Property Name="project_id" Type="Int32" />
-          <Property Name="task_id" Type="Int32" />
-          <NavigationProperty Name="project" Relationship="Self.fk_user_projectid" FromRole="users" ToRole="project" />
-          <NavigationProperty Name="task" Relationship="Self.fk_user_taskid" FromRole="users" ToRole="task" />
+          <NavigationProperty Name="users" Relationship="ProjectManagerSPAModel.fk_user_taskid" FromRole="task" ToRole="user" />
         </EntityType>
         <Association Name="fk_task_parentid">
           <End Role="parent_task" Type="Self.parent_task" Multiplicity="0..1" />
@@ -194,35 +180,10 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="fk_user_projectid">
-          <End Role="project" Type="Self.project" Multiplicity="0..1" />
-          <End Role="users" Type="Self.user" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="project">
-              <PropertyRef Name="project_id" />
-            </Principal>
-            <Dependent Role="users">
-              <PropertyRef Name="project_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_user_taskid">
-          <End Role="task" Type="Self.task" Multiplicity="0..1" />
-          <End Role="users" Type="Self.user" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="task">
-              <PropertyRef Name="task_id" />
-            </Principal>
-            <Dependent Role="users">
-              <PropertyRef Name="task_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="ProjectManagerSPAEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="parent_task" EntityType="Self.parent_task" />
           <EntitySet Name="projects" EntityType="Self.project" />
           <EntitySet Name="tasks" EntityType="Self.task" />
-          <EntitySet Name="users" EntityType="Self.user" />
           <AssociationSet Name="fk_task_parentid" Association="Self.fk_task_parentid">
             <End Role="parent_task" EntitySet="parent_task" />
             <End Role="task" EntitySet="tasks" />
@@ -231,16 +192,54 @@
             <End Role="project" EntitySet="projects" />
             <End Role="task" EntitySet="tasks" />
           </AssociationSet>
-          <AssociationSet Name="fk_user_projectid" Association="Self.fk_user_projectid">
+          <EntitySet Name="users" EntityType="ProjectManagerSPAModel.user" />
+          <AssociationSet Name="fk_user_projectid" Association="ProjectManagerSPAModel.fk_user_projectid">
             <End Role="project" EntitySet="projects" />
-            <End Role="users" EntitySet="users" />
+            <End Role="user" EntitySet="users" />
           </AssociationSet>
-          <AssociationSet Name="fk_user_taskid" Association="Self.fk_user_taskid">
+          <AssociationSet Name="fk_user_taskid" Association="ProjectManagerSPAModel.fk_user_taskid">
             <End Role="task" EntitySet="tasks" />
-            <End Role="users" EntitySet="users" />
+            <End Role="user" EntitySet="users" />
           </AssociationSet>
-        </EntityContainer>
-      </Schema>
+          </EntityContainer>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="user_id" Type="Int32" Nullable="false" />
+          <Property Name="first_name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="last_name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="emp_id" Type="Int32" />
+          <Property Name="project_id" Type="Int32" />
+          <Property Name="task_id" Type="Int32" />
+          <NavigationProperty Name="project" Relationship="ProjectManagerSPAModel.fk_user_projectid" FromRole="user" ToRole="project" />
+          <NavigationProperty Name="task" Relationship="ProjectManagerSPAModel.fk_user_taskid" FromRole="user" ToRole="task" />
+        </EntityType>
+        <Association Name="fk_user_projectid">
+          <End Type="ProjectManagerSPAModel.project" Role="project" Multiplicity="0..1" />
+          <End Type="ProjectManagerSPAModel.user" Role="user" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="project">
+              <PropertyRef Name="project_id" />
+            </Principal>
+            <Dependent Role="user">
+              <PropertyRef Name="project_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_user_taskid">
+          <End Type="ProjectManagerSPAModel.task" Role="task" Multiplicity="0..1" />
+          <End Type="ProjectManagerSPAModel.user" Role="user" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="task">
+              <PropertyRef Name="task_id" />
+            </Principal>
+            <Dependent Role="user">
+              <PropertyRef Name="task_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -282,12 +281,12 @@
           <EntitySetMapping Name="users">
             <EntityTypeMapping TypeName="ProjectManagerSPAModel.user">
               <MappingFragment StoreEntitySet="users">
-                <ScalarProperty Name="user_id" ColumnName="user_id" />
-                <ScalarProperty Name="first_name" ColumnName="first_name" />
-                <ScalarProperty Name="last_name" ColumnName="last_name" />
-                <ScalarProperty Name="emp_id" ColumnName="emp_id" />
-                <ScalarProperty Name="project_id" ColumnName="project_id" />
                 <ScalarProperty Name="task_id" ColumnName="task_id" />
+                <ScalarProperty Name="project_id" ColumnName="project_id" />
+                <ScalarProperty Name="emp_id" ColumnName="emp_id" />
+                <ScalarProperty Name="last_name" ColumnName="last_name" />
+                <ScalarProperty Name="first_name" ColumnName="first_name" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

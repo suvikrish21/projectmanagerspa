@@ -59,14 +59,14 @@ namespace ProjMgrAPI.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!taskExists(id))
-                {
+                //if (!taskExists(id))
+                //{
                     return NotFound();
-                }
-                else
-                {
+                //}
+                //else
+                //{
                     throw;
-                }
+                //}
             }
 
             return StatusCode(HttpStatusCode.NoContent);
@@ -81,13 +81,28 @@ namespace ProjMgrAPI.Controllers
                 return BadRequest(ModelState);
             }
 
+            MapTaskUser(task);
+
             db.tasks.Add(task);
             db.SaveChanges();
 
             return CreatedAtRoute("DefaultApi", new { id = task.task_id }, task);
         }
 
-      
+        private void MapTaskUser(task task)
+        {
+            if (task.users != null && task.users.Count > 0)
+            {
+                var tskusrid = task.users.First().user_id;
+                var usr = db.users.First(u => u.user_id == tskusrid);
+                usr.task_id = task.task_id;
+
+                task.users.Clear();
+                task.users.Add(usr);
+            }
+        }
+
+
 
         // DELETE: api/Tasks/5
         [ResponseType(typeof(task))]
@@ -114,9 +129,9 @@ namespace ProjMgrAPI.Controllers
             base.Dispose(disposing);
         }
 
-        private bool taskExists(int id)
-        {
-            return db.tasks.Count(e => e.task_id == id) > 0;
-        }
+        //private bool taskExists(int id)
+        //{
+        //    return db.tasks.Count(e => e.task_id == id) > 0;
+        //}
     }
 }

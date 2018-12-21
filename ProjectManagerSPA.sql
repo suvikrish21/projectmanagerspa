@@ -36,16 +36,17 @@ constraint fk_task_parentid foreign key (parent_id) references parent_task(paren
 
 
 select * from users 
-create table users
+
+drop table manager 
+create table manager
 (
-user_id int identity(1,1),
-first_name varchar(100) NOT NULL,
-last_name varchar(100) NOT NULL,
-emp_id int NOT NULL,
+user_id int not null,
+first_name varchar(100),
+last_name varchar(100),
+emp_id int,
 project_id int,
-task_id int,
-constraint pk_user_userid primary key clustered (user_id),
-constraint fk_user_projectid foreign key (project_id) references project(project_id),
-constraint fk_user_taskid foreign key (task_id) references task(task_id)
+task_id int
 );
 
+
+create table u

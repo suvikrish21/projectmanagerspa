@@ -18,7 +18,7 @@ namespace ProjMgrAPI.Tests.Controllers
         [TestCase]
         public void AddParentTaskTestMethod()
         {
-            var taskCtrl = new TasksController();
+            var taskCtrl = new PTasksController();
 
 
 
@@ -31,6 +31,41 @@ namespace ProjMgrAPI.Tests.Controllers
             var createdResult = actResult as CreatedAtRouteNegotiatedContentResult<parent_task>;
 
             Debug.WriteLine(actResult);
+            taskCtrl.Dispose();
+
+            Assert.AreEqual("DefaultApi", createdResult.RouteName);
+        }
+
+
+        [TestCase]
+
+        public void AddTaskTestMethod2()
+        {
+            var taskCtrl = new TasksController();
+
+          
+
+
+            var tsk = new task()
+            {
+                task1 = "TASK Z",
+                start_dt = DateTime.Now,
+                end_dt = DateTime.Now.AddDays(1),
+                parent_id = 1,
+                project_id = 1,
+                priority = 5,
+                status = "NEW",
+              
+
+            };
+
+
+
+            IHttpActionResult actResult = taskCtrl.Posttask(tsk);
+            var createdResult = actResult as CreatedAtRouteNegotiatedContentResult<task>;
+
+            Debug.WriteLine(actResult);
+            taskCtrl.Dispose();
 
             Assert.AreEqual("DefaultApi", createdResult.RouteName);
         }
@@ -41,7 +76,7 @@ namespace ProjMgrAPI.Tests.Controllers
         {
             var taskCtrl = new TasksController();
 
-
+            var usr = new user { user_id = 2 };
 
 
             var tsk = new task ()
@@ -52,7 +87,9 @@ namespace ProjMgrAPI.Tests.Controllers
                    parent_id = 1,
                     project_id =1,
                      priority = 5,
-                      status ="NEW"
+                      status ="NEW",
+                users = new List<user>() { usr }
+
             };
 
 
@@ -61,6 +98,7 @@ namespace ProjMgrAPI.Tests.Controllers
             var createdResult = actResult as CreatedAtRouteNegotiatedContentResult<task>;
 
             Debug.WriteLine(actResult);
+            taskCtrl.Dispose();
 
             Assert.AreEqual("DefaultApi", createdResult.RouteName);
         }
@@ -110,7 +148,6 @@ namespace ProjMgrAPI.Tests.Controllers
             Assert.AreEqual(taskid, createdResult.Content.task_id);
         }
 
-
         [TestCase]
         public void GetTasksTestMethod()
         {
@@ -125,6 +162,47 @@ namespace ProjMgrAPI.Tests.Controllers
             Debug.WriteLine(actResult);
 
             Assert.AreEqual(actResult.Count, actResult.Count);
+        }
+
+
+        [TestCase]
+        public void GetParentTasksTestMethod()
+        {
+            var taskCtrl = new PTasksController();
+
+
+
+
+            List<parent_task> actResult = taskCtrl.Gettasks().ToList();
+
+
+            Debug.WriteLine(actResult);
+
+            Assert.AreEqual(actResult.Count, actResult.Count);
+        }
+
+
+
+        [TestCase]
+        public void DeleteTaskTestMethod()
+        {
+            var tskCtrl = new TasksController();
+
+            var tskid = tskCtrl.Gettasks().ToList().
+                         Where(t => t.users == null || t.users.Count == 0).
+                          Max(t => t.task_id);
+         
+
+           
+            var actResult = tskCtrl.Deletetask(tskid);
+
+            var createdResult = actResult as OkNegotiatedContentResult<task>;
+
+            Debug.WriteLine(actResult);
+
+            Assert.AreEqual(tskid, createdResult.Content.task_id);
+
+
         }
 
 

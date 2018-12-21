@@ -34,6 +34,7 @@ namespace ProjMgrAPI.Tests.Controllers
             var createdResult = actResult as CreatedAtRouteNegotiatedContentResult<user>;
 
             Debug.WriteLine(actResult);
+            userCtrl.Dispose();
 
             Assert.AreEqual("DefaultApi", createdResult.RouteName);
         }
@@ -43,7 +44,7 @@ namespace ProjMgrAPI.Tests.Controllers
         {
             var userCtrl = new UsersController();
 
-
+           
             var user = new user()
             {
                 last_name = "Knight2",
@@ -60,6 +61,31 @@ namespace ProjMgrAPI.Tests.Controllers
             Debug.WriteLine(actResult);
 
             Assert.AreEqual(HttpStatusCode.NoContent, createdResult.StatusCode);
+        }
+
+
+        [TestCase]
+        public void EditUserTestMethod2()
+        {
+            var userCtrl = new UsersController();
+
+
+            var user = new user()
+            {
+                last_name = "Knight2",
+                first_name = "Nick1",
+                emp_id = 52000,
+                user_id = 1
+
+            };
+
+           
+            IHttpActionResult actResult = userCtrl.Putuser(2, user);
+            var createdResult = actResult as BadRequestResult;
+
+            Debug.WriteLine(actResult);
+
+            Assert.AreEqual(null, null);
         }
 
 
@@ -97,6 +123,29 @@ namespace ProjMgrAPI.Tests.Controllers
             Assert.AreEqual(actResult.Count , actResult.Count);
         }
 
+
+
+        [TestCase]
+        public void DeleteUserTestMethod()
+        {
+            var usrCtrl = new UsersController();
+
+
+
+            var userid = usrCtrl.Getusers().ToList().
+                         Where(u => u.project == null || u.task == null).
+                          Max(u => u.user_id);
+
+            var actResult = usrCtrl.Deleteuser(userid);
+
+            var createdResult = actResult as OkNegotiatedContentResult<user>;
+
+            Debug.WriteLine(actResult);
+
+            Assert.AreEqual(userid, createdResult.Content.user_id);
+
+
+        }
 
 
     }

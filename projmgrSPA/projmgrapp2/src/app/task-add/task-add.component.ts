@@ -93,7 +93,11 @@ export class TaskAddComponent implements OnInit {
               "start_dt" : this.tsk.start_dt,
               "end_dt" : this.tsk.end_dt,
               "priority" : this.tsk.priority,
-              "status" : "NEW"
+              "status" : "NEW",
+              "users" : [{ 
+                "user_id" : this.tsk.owner.user_id 
+               
+                    }]
       
   
      };

@@ -60,8 +60,10 @@ export class ProjectComponent implements OnInit {
         start_dt : res.start_dt == null ? null :   this.datepipe.transform(new Date(res.start_dt), 'yyyy-MM-dd'), 
         end_dt : res.end_dt == null ? null :  this.datepipe.transform(new Date(res.end_dt),  'yyyy-MM-dd'), 
         priority : res.priority == null? 0 : res.priority,
-        manager : null,
-        project_id : res.project_id
+       
+        project_id : res.project_id,
+        manager  : res.users == null ? null :res.users[0]
+        
         };
 
         this.action = "Update";
@@ -86,11 +88,9 @@ export class ProjectComponent implements OnInit {
                    "end_dt": this.proj.end_dt,
                    "priority": this.proj.priority,
                     "users" : [{ 
-                      "user_id" : this.proj.manager.user_id ,
-                      "first_name" : this.proj.manager.first_name,
-                      "last_name" : this.proj.manager.last_name, 
-                      "emp_id" : this.proj.manager.emp_id
-                    }]
+                      "user_id" : this.proj.manager.user_id 
+                     
+                          }]
 
                    };
    
@@ -113,7 +113,11 @@ export class ProjectComponent implements OnInit {
     "start_dt": this.proj.start_dt,
     "end_dt": this.proj.end_dt,
     "priority": this.proj.priority,
-    "project_id": this.proj.project_id
+    "project_id": this.proj.project_id,
+    "users" : [{ 
+      "user_id" : this.proj.manager.user_id 
+     
+          }]
 
     };
 

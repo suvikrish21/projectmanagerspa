@@ -17,7 +17,7 @@ namespace ProjMgrAPI.Models
         public int user_id { get; set; }
         public string first_name { get; set; }
         public string last_name { get; set; }
-        public int emp_id { get; set; }
+        public Nullable<int> emp_id { get; set; }
         public Nullable<int> project_id { get; set; }
         public Nullable<int> task_id { get; set; }
     

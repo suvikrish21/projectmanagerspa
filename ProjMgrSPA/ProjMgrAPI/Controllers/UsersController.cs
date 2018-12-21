@@ -22,13 +22,14 @@ namespace ProjMgrAPI.Controllers
         // GET: api/Users
         public IQueryable<user> Getusers()
         {
-            return db.users.Where(u=> u.project_id == null & u.task_id == null);
+            return db.users;
         }
 
         // GET: api/Users/5
         [ResponseType(typeof(user))]
         public IHttpActionResult Getuser(int id)
         {
+          
             user user = db.users.Find(id);
             if (user == null)
             {
@@ -60,14 +61,14 @@ namespace ProjMgrAPI.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!userExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
+                //if (!userExists(id))
+                //{
+                //    return NotFound();
+                //}
+                //else
+                ///{
                     throw;
-                }
+                //}
             }
 
             return StatusCode(HttpStatusCode.NoContent);
@@ -83,6 +84,10 @@ namespace ProjMgrAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
+
+
+            int usersequence = db.users.Max(t => t.user_id);
+            user.user_id = usersequence + 1;
 
             db.users.Add(user);
             db.SaveChanges();
@@ -115,9 +120,9 @@ namespace ProjMgrAPI.Controllers
             base.Dispose(disposing);
         }
 
-        private bool userExists(int id)
-        {
-            return db.users.Count(e => e.user_id == id) > 0;
-        }
+        //private bool userExists(int id)
+        //{
+           // return db.users.Count(e => e.user_id == id) > 0;
+        //}
     }
 }

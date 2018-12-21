@@ -51,6 +51,8 @@ namespace ProjMgrAPI.Controllers
                 return BadRequest();
             }
 
+            MapProjectUser(project);
+
             db.Entry(project).State = EntityState.Modified;
 
             try
@@ -59,14 +61,14 @@ namespace ProjMgrAPI.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!projectExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
+                //if (!projectExists(id))
+                //{
+                //    return NotFound();
+                //}
+                //else
+                //{
                     throw;
-                }
+                //}
             }
 
             return StatusCode(HttpStatusCode.NoContent);
@@ -81,10 +83,25 @@ namespace ProjMgrAPI.Controllers
                 return BadRequest(ModelState);
             }
 
+            MapProjectUser(project);
+
             db.projects.Add(project);
             db.SaveChanges();
 
             return CreatedAtRoute("DefaultApi", new { id = project.project_id }, project);
+        }
+
+        private void MapProjectUser(project project)
+        {
+            if (project.users != null && project.users.Count > 0)
+            {
+                var projusrid = project.users.First().user_id;
+                var usr = db.users.First(u => u.user_id == projusrid);
+                usr.project_id = project.project_id;
+
+                project.users.Clear();
+                project.users.Add(usr);
+            }
         }
 
         // DELETE: api/Projects/5
@@ -112,9 +129,9 @@ namespace ProjMgrAPI.Controllers
             base.Dispose(disposing);
         }
 
-        private bool projectExists(int id)
-        {
-            return db.projects.Count(e => e.project_id == id) > 0;
-        }
+        //private bool projectExists(int id)
+        //{
+        //    return db.projects.Count(e => e.project_id == id) > 0;
+        //}
     }
 }

@@ -37,12 +37,12 @@
     <EntitySetMapping Name="users">
       <EntityTypeMapping TypeName="ProjectManagerSPAModel.user">
         <MappingFragment StoreEntitySet="users">
-          <ScalarProperty Name="user_id" ColumnName="user_id" />
-          <ScalarProperty Name="first_name" ColumnName="first_name" />
-          <ScalarProperty Name="last_name" ColumnName="last_name" />
-          <ScalarProperty Name="emp_id" ColumnName="emp_id" />
-          <ScalarProperty Name="project_id" ColumnName="project_id" />
           <ScalarProperty Name="task_id" ColumnName="task_id" />
+          <ScalarProperty Name="project_id" ColumnName="project_id" />
+          <ScalarProperty Name="emp_id" ColumnName="emp_id" />
+          <ScalarProperty Name="last_name" ColumnName="last_name" />
+          <ScalarProperty Name="first_name" ColumnName="first_name" />
+          <ScalarProperty Name="user_id" ColumnName="user_id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
