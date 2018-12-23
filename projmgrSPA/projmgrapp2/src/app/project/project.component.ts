@@ -19,6 +19,8 @@ export class ProjectComponent implements OnInit {
   public action = "Add";
   public usrList;
 
+  public projSortText = "project1";
+
   constructor(private projmgrservice : ProjmgrapiService, private datepipe: DatePipe) { }
 
   ngOnInit() {
@@ -29,7 +31,11 @@ export class ProjectComponent implements OnInit {
   }
 
   
+  sortProjectBy(sortByValue) {
 
+
+      this.projSortText = sortByValue;
+  }
  
  
   getUsers() {
@@ -75,9 +81,11 @@ export class ProjectComponent implements OnInit {
 
 
 
-  addProject() {
+  addProject(isValid : boolean) {
 
+    if (isValid) {
 
+   
     const url = AppSettings.ProjectAPIEndPoint + "/projects/";
   
 
@@ -132,6 +140,7 @@ export class ProjectComponent implements OnInit {
 
 
   }
+}
   }
 
   getProjects() {

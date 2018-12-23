@@ -14,7 +14,10 @@ import { TaskViewComponent } from './task-view/task-view.component';
 import { ProjmgrapiService } from './projmgrapi.service';
 import { DatePipe } from '@angular/common';
 import { ProjmodalComponent } from './projmodal/projmodal.component';
-import { UserFilterPipe } from 'src/app/user/userfilter';
+import { UserFilterPipe } from './user/userfilter';
+import { UserSortPipe } from './user/usersort';
+import { ProjFilterPipe } from './project/projfilter';
+import { ProjSortPipe } from './project/projsort';
 
 @NgModule({
   declarations: [
@@ -25,7 +28,10 @@ import { UserFilterPipe } from 'src/app/user/userfilter';
     TaskAddComponent,
     TaskViewComponent,
     ProjmodalComponent,
-    UserFilterPipe
+    UserFilterPipe,
+    UserSortPipe,
+    ProjFilterPipe,
+    ProjSortPipe
   ],
   imports: [
     BrowserModule,

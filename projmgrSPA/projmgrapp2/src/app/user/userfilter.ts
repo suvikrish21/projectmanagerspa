@@ -9,12 +9,12 @@ import{ Pipe, PipeTransform } from '@angular/core';
 })
 
 export class UserFilterPipe implements PipeTransform {
-    transform(users : any[], filter1 : any ) : any {
+    transform(users : any[], filterValue : any ) : any {
         console.log(users);
-        console.log(filter1);
-        if (!users || !filter1)
+        console.log(filterValue);
+        if (!users || !filterValue)
           return users;
 
-        return users.filter(item=> item.first_name.toLowerCase().indexOf(filter1.toLowerCase()) !== -1 || item.last_name.toLowerCase().indexOf(filter1.toLowerCase()) !== -1);  
+        return users.filter(item=> item.first_name.toLowerCase().indexOf(filterValue.toLowerCase()) !== -1 || item.last_name.toLowerCase().indexOf(filterValue.toLowerCase()) !== -1);  
     }
 }

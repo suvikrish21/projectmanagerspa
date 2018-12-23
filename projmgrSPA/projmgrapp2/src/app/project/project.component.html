@@ -6,12 +6,12 @@
   <div class="app-modal-body">
 
 
-     <input type="Search" placeholder="Search Users" [(ngModel)]="searchText" />
+     <input type="Search" placeholder="Search Users" [(ngModel)]="usrSrchText" />
   
 
     <ul class="list-group">
 
-    <li class="list-group-item" *ngFor="let usr of usrList | userfilter:searchText">
+    <li class="list-group-item" *ngFor="let usr of usrList | userfilter:usrSrchText">
         <input type="radio" name="usrs"  (click)="proj.manager  = usr"/> {{usr.first_name}}  {{usr.last_name}}
     </li>
         </ul>
@@ -24,7 +24,10 @@
 
 
 <div class="container">
+    
+    <form #projectForm="ngForm"  (click)="addProject(projectForm.valid)" >
 
+    
 
     <div class="row">
     <div class="col-md-1">
@@ -83,7 +86,7 @@
                 </div>
                 <div class="col-md-5">
                   
-                   <input class="form-control" type="text" name="mgrid"  readonly value="{{proj.manager == null ? '' : proj.manager.first_name + ' ' + proj.manager.last_name}}" />
+                   <input class="form-control" type="text" name="mgrid" required  readonly value="{{proj.manager == null ? '' : proj.manager.first_name + ' ' + proj.manager.last_name}}" />
                 </div>
                 <div class="col-md-1">
                    <input class="btn btn-secondary" type="button" value="Search" (click)="modal.show()" />
@@ -96,20 +99,38 @@
             <div class="col-md-4">
            </div>
             <div class="col-md-1">
-                <input class="btn" type="submit" (click)="addProject()" [(ngModel)]="action"  />
+                <button class="btn" type="submit" > {{action}} </button>
             </div>
                 <div class="col-md-1">
-               <input class="btn" type="button" value="Reset" />
+               <button class="btn" type="button"> Reset </button>
         
             </div>
           </div>
+
+
+        </form>
 
 </div>
 <hr/>
 
 <div *ngIf="projList" class="container">
+
+
+        <div>
+                <input type="Search" placeholder="Search Projects" [(ngModel)]="projSrchText" />
+       </div>
+
+       <div>
+             Sort By:
+             <input type="button" class="btn" value="Start Date" (click)="sortProjectBy('start_dt')"  />
+             <input type="button" class="btn" value="End Date" (click)="sortProjectBy('end_dt')"  />
+             <input type="button" class="btn" value="Priority" (click)="sortProjectBy('priority')"  />
+             <input type="button" class="btn" value="Completed" (click)="sortProjectBy('status')"  />
+    
+       </div>
+
   
-     <div class="list-group" *ngFor="let proj of projList">
+     <div class="list-group" *ngFor="let proj of projList  | projfilter:projSrchText | projsort: projSortText">
         
         <div class="list-group-item">
 

@@ -15,6 +15,8 @@ export class UserComponent implements OnInit {
    public user = new UserData(); 
    public action = "Add";
 
+   public sortText = "first_name";
+
   constructor(private projmgrservice : ProjmgrapiService) { 
       this.getUsers();
   }
@@ -22,6 +24,10 @@ export class UserComponent implements OnInit {
   ngOnInit() {
   }
 
+   sortUserBy(sortByValue) {
+
+    this.sortText = sortByValue;
+   }
 
    resetUser() {
 
@@ -66,7 +72,9 @@ export class UserComponent implements OnInit {
 
   }
 
-  addUser() {
+  addUser(isValid : boolean) {
+
+    if (isValid) {
 
     const url = AppSettings.ProjectAPIEndPoint + "/users/";
   
@@ -108,6 +116,8 @@ export class UserComponent implements OnInit {
         this.getUsers();
       }
     );
+
+  }
 
 
   }

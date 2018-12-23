@@ -5,9 +5,13 @@
       Project List
     </div>
     <div class="app-modal-body">
+     
+   <input type="Search" placeholder="Search Projects" [(ngModel)]="projSrchText" />
+  
+
       <ul class="list-group">
   
-      <li class="list-group-item" *ngFor="let proj of projList">
+      <li class="list-group-item" *ngFor="let proj of projList | projfilter:projSrchText">
           <input type="radio" name="projs" (click)="tsk.project  = proj" /> {{proj.project1}} 
       </li>
           </ul>
@@ -42,9 +46,13 @@
       User List
     </div>
     <div class="app-modal-body">
+  
+       <input type="Search" placeholder="Search Users" [(ngModel)]="usrSrchText" />
+  
+
       <ul class="list-group">
   
-      <li class="list-group-item" *ngFor="let usr of usrList">
+      <li class="list-group-item" *ngFor="let usr of usrList | userfilter:usrSrchText">
           <input type="radio" name="usrs" (click)="tsk.owner  = usr" /> {{usr.first_name}}  {{usr.last_name}}
       </li>
           </ul>
