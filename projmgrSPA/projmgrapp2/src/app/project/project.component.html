@@ -25,7 +25,7 @@
 
 <div class="container">
     
-    <form #projectForm="ngForm"  (click)="addProject(projectForm.valid)" >
+    <form #projectForm="ngForm"  (submit)="addProject(projectForm.valid)" >
 
     
 
@@ -37,7 +37,8 @@
       <div class="col-md-6">
         
          <input class="form-control" required type="text" name="proj" [(ngModel)]="proj.project_name" />
-
+         <span class="validation">Project name is Required</span>
+  
       </div>
     </div>
      <br/>
@@ -48,7 +49,7 @@
         </div>
         <div class="col-md-3">
             
-            <input type="checkbox" name="setdate" /> 
+            <input type="checkbox" (change)="setProjectDates($event)" [(ngModel)]="projdts" name="setdate" /> 
             <small>Set Start and End Date</small>
         </div>
         </div>
@@ -58,10 +59,11 @@
             </div>
        
             <div class="col-md-3">
-           <input class="form-control input-sm" type="date" name="startdt" [(ngModel)]="proj.start_dt" placeholder="Start Date" />
+           <input class="form-control input-sm" type="date" name="startdt" [(ngModel)]="proj.start_dt" [disabled]="!projdts" placeholder="Start Date" />
            </div>
            <div class="col-md-3">
-           <input class="form-control input-sm" type="date" name="enddt" [(ngModel)]="proj.end_dt" placeholder="End Date" />
+           <input class="form-control input-sm" type="date" name="enddt"  [(ngModel)]="proj.end_dt" [disabled]="!projdts" placeholder="End Date" />
+           <span class="validation">End date should be greater than equal to start date</span>
   
         </div>
       </div>
@@ -86,7 +88,7 @@
                 </div>
                 <div class="col-md-5">
                   
-                   <input class="form-control" type="text" name="mgrid" required  readonly value="{{proj.manager == null ? '' : proj.manager.first_name + ' ' + proj.manager.last_name}}" />
+                   <input class="form-control" type="text" name="mgrid"   readonly value="{{proj.manager == null ? '' : proj.manager.first_name + ' ' + proj.manager.last_name}}" />
                 </div>
                 <div class="col-md-1">
                    <input class="btn btn-secondary" type="button" value="Search" (click)="modal.show()" />
@@ -139,13 +141,13 @@
                         <div class="col-md-5">
 
            
-               {{proj.project1}} 
+            Project:   {{proj.project1}} 
            </div>
 
            <div class="col-md-1">
 
            
-            {{proj.priority}} 
+           Priority: {{proj.priority}} 
         </div>
 
            <div classs="col-md-2">
@@ -159,13 +161,13 @@
             <div class="col-md-3">
 
 
-   {{proj.start_dt | date:'dd-MM-yyyy'}} 
+   Start Date: {{proj.start_dt | date:'dd-MM-yyyy'}} 
 </div>
 
     <div class="col-md-3">
 
 
-{{proj.end_dt | date:'dd-MM-yyyy'}} 
+End date: {{proj.end_dt | date:'dd-MM-yyyy'}} 
 </div>
 
 
@@ -175,8 +177,23 @@
 </div>
         
            
-            </div>
-       
+           
+
+
+            <div class="row">
+                    <div class="col-md-3">
+        
+        
+           No of Tasks: {{proj.tasks?.length || '0'}}
+        </div>
+        
+            <div class="col-md-3">
+        
+        
+        Completed: {{proj.tasks?.length || '0'}}
+        </div>
+        </div>
+    </div>
        
        
 

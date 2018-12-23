@@ -36,6 +36,25 @@ export class ProjectComponent implements OnInit {
 
       this.projSortText = sortByValue;
   }
+
+
+  setProjectDates(e : Event) {
+    
+    var chkbox =  e.target as HTMLInputElement;
+    console.log("set project dates " + chkbox.checked);
+
+   
+
+    if (chkbox.checked) {
+      this.proj.start_dt = this.datepipe.transform(Date.now(), "yyyy-MM-dd");
+      this.proj.end_dt = this.datepipe.transform(Date.now() , "yyyy-MM-dd");
+    }
+    else {
+      this.proj.start_dt = null;
+      this.proj.end_dt = null;
+    }
+
+  }
  
  
   getUsers() {
@@ -95,7 +114,7 @@ export class ProjectComponent implements OnInit {
                    "start_dt": this.proj.start_dt,
                    "end_dt": this.proj.end_dt,
                    "priority": this.proj.priority,
-                    "users" : [{ 
+                    "users" :  this.proj.manager == null ? null : [{ 
                       "user_id" : this.proj.manager.user_id 
                      
                           }]
@@ -122,8 +141,8 @@ export class ProjectComponent implements OnInit {
     "end_dt": this.proj.end_dt,
     "priority": this.proj.priority,
     "project_id": this.proj.project_id,
-    "users" : [{ 
-      "user_id" : this.proj.manager.user_id 
+    "users" :  this.proj.manager == null ? null : [{ 
+      "user_id" :this.proj.manager.user_id 
      
           }]
 
