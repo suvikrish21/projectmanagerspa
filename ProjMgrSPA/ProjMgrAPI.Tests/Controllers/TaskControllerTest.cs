@@ -43,7 +43,18 @@ namespace ProjMgrAPI.Tests.Controllers
         {
             var taskCtrl = new TasksController();
 
-          
+            var projCtrl = new ProjectsController();
+            var pTaskCtrl = new PTasksController();
+
+
+
+            var projid =   projCtrl.Getprojects().ToList().
+                          Where(p => p.users == null || p.users.Count == 0).
+                          Max(p => p.project_id);
+
+            var parentid = pTaskCtrl.Gettasks().ToList().
+                       
+                         Max(p => p.parent_id);
 
 
             var tsk = new task()
@@ -51,8 +62,8 @@ namespace ProjMgrAPI.Tests.Controllers
                 task1 = "TASK Z",
                 start_dt = DateTime.Now,
                 end_dt = DateTime.Now.AddDays(1),
-                parent_id = 1,
-                project_id = 1,
+                parent_id = parentid,
+                project_id = projid,
                 priority = 5,
                 status = "NEW",
               
@@ -76,7 +87,26 @@ namespace ProjMgrAPI.Tests.Controllers
         {
             var taskCtrl = new TasksController();
 
-            var usr = new user { user_id = 2 };
+            var userCtrl = new UsersController();
+            var userid = userCtrl.Getusers().ToList().
+                      
+                      Max(u => u.user_id);
+
+
+            var usr = new user { user_id = userid };
+
+            var projCtrl = new ProjectsController();
+            var pTaskCtrl = new PTasksController();
+
+
+
+            var projid = projCtrl.Getprojects().ToList().
+                          Where(p => p.users == null || p.users.Count == 0).
+                          Max(p => p.project_id);
+
+            var parentid = pTaskCtrl.Gettasks().ToList().
+
+                         Max(p => p.parent_id);
 
 
             var tsk = new task ()
@@ -84,8 +114,8 @@ namespace ProjMgrAPI.Tests.Controllers
                 task1 = "TASK A",
                  start_dt = DateTime.Now,
                   end_dt = DateTime.Now.AddDays(1),
-                   parent_id = 1,
-                    project_id =1,
+                   parent_id = parentid,
+                    project_id = projid,
                      priority = 5,
                       status ="NEW",
                 users = new List<user>() { usr }
@@ -106,23 +136,39 @@ namespace ProjMgrAPI.Tests.Controllers
         [TestCase]
         public void EditTaskTestMethod()
         {
-            var taskCtrl = new TasksController();
+            //var taskCtrl = new TasksController();
 
 
-            var tsk = new task()
-            {
-                task1 = "TASK ABC",
-                start_dt = DateTime.Now,
-                end_dt = DateTime.Now.AddDays(1),
-                parent_id = 1,
-                project_id = 1,
-                priority = 5,
-                status = "HOLD",
-                task_id = 1
-            };
+            var projCtrl = new ProjectsController();
+            var pTaskCtrl = new PTasksController();
+            var tskCtrl = new TasksController();
 
 
-            IHttpActionResult actResult = taskCtrl.Puttask(tsk.task_id, tsk);
+
+            var projid = projCtrl.Getprojects().ToList().
+                          Where(p => p.users == null || p.users.Count == 0).
+                          Max(p => p.project_id);
+
+            var parentid = pTaskCtrl.Gettasks().ToList().
+
+                         Max(p => p.parent_id);
+
+            var tsk = tskCtrl.Gettasks().ToList().First();
+
+            tsk.task1 = "TASK ABC";
+            tsk.start_dt = DateTime.Now;
+            tsk.end_dt = DateTime.Now.AddDays(1);
+         
+            tsk.priority = 5;
+            tsk.status = "HOLD";
+
+            tsk.project_id = projid;
+            tsk.parent_id = parentid;
+               
+            
+
+
+            IHttpActionResult actResult = tskCtrl.Puttask(tsk.task_id, tsk);
             var createdResult = actResult as StatusCodeResult;
 
             Debug.WriteLine(actResult);
@@ -137,7 +183,9 @@ namespace ProjMgrAPI.Tests.Controllers
             var tskCtrl = new TasksController();
 
 
-            int taskid = 1;
+            int taskid  = tskCtrl.Gettasks().ToList().
+                        Where(t => t.users == null || t.users.Count == 0).
+                         Max(t => t.task_id);
 
 
             IHttpActionResult actResult = tskCtrl.Gettask(taskid);

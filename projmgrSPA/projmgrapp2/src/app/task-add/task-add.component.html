@@ -1,3 +1,7 @@
+<div *ngIf="statusMessage" class="panel panel-info">
+    <div class="panel-body">{{statusMessage}}</div>
+</div>
+
 <app-modal #modal1>
     <div class="app-modal-header">
         Project List
@@ -24,10 +28,14 @@
     <div class="app-modal-header">
         Parent Task List
     </div>
-    <div class="app-modal-body">
+    <div class="app-modal-body"> 
+
+        <input type="Search" placeholder="Search Parent Tasks" [(ngModel)]="pTaskSrchText" />
+
+
         <ul class="list-group">
 
-            <li class="list-group-item" *ngFor="let ptask of parentTaskList">
+            <li class="list-group-item" *ngFor="let ptask of parentTaskList | ptaskfilter:pTaskSrchText">
                 <input type="radio" name="ptasks" (click)="tsk.parent_task  = ptask" /> {{ptask.parent_task1}}
             </li>
         </ul>
@@ -64,101 +72,100 @@
 
 <div class="container">
 
-   <form #taskForm="ngForm" (submit)="addTask(taskForm.valid)">
+    <form #taskForm="ngForm" (submit)="addTask(taskForm.valid)">
 
-    <div class="row">
-        <div class="col-md-1">
-            <label for="proj">Project: </label>
+        <div class="row">
+            <div class="col-md-1">
+                <label for="proj">Project: </label>
+            </div>
+            <div class="col-md-6">
+
+                <input class="form-control" type="text" name="proj" readonly value="{{tsk.project?.project1 || ''}}" />
+            </div>
+            <div class="col-md-1">
+                <input class="btn btn-secondary" type="button" value="Search" (click)="modal1.show()" [disabled]="tsk.task_id" />
+            </div>
         </div>
-        <div class="col-md-6">
+        <br/>
+        <div class="row">
+            <div class="col-md-1">
+                <label for="task1">Task: </label>
+            </div>
 
-            <input class="form-control" type="text" name="proj" readonly value="{{tsk.project?.project1 || ''}}"
-            />
+            <div class="col-md-7">
+
+                <input class="form-control" required type="text" required name="task1" [(ngModel)]="tsk.task_name" />
+                <span class="validation">Task name is Required</span>
+            </div>
         </div>
-        <div class="col-md-1">
-            <input class="btn btn-secondary" type="button" value="Search" (click)="modal1.show()"  [disabled] = "tsk.task_id"/>
+        <br/>
+
+        <div class="row">
+            <div class="col-md-1">
+
+            </div>
+            <div class="col-md-3">
+
+                <input type="checkbox" [disabled]="tsk.task_id" name="parentTask" [(ngModel)]="tsk.is_parent_task" /> Parent Task
+            </div>
         </div>
-    </div>
-    <br/>
-    <div class="row">
-        <div class="col-md-1">
-            <label for="task1">Task: </label>
-        </div>
+        <div class="row">
+            <div class="col-md-4">
 
-        <div class="col-md-7">
+            </div>
 
-            <input class="form-control" required type="text" required name="task1" [(ngModel)]="tsk.task_name" />
-            <span class="validation">Task name is Required</span>
-        </div>
-    </div>
-    <br/>
-
-    <div class="row">
-        <div class="col-md-1">
-
-        </div>
-        <div class="col-md-3">
-
-            <input type="checkbox" [disabled] = "tsk.task_id" name="parentTask" [(ngModel)]="tsk.is_parent_task" /> Parent Task
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-4">
-
-        </div>
-
-
-    </div>
-
-    <br/>
-
-    <div class="row">
-        <div class="col-md-1">
-            <label for="priority">Priority: </label>
-        </div>
-        <div class="col-md-7">
-
-            <input class="form-control" type="range" name="priority" step="1" min="0" max="30" [(ngModel)]="tsk.priority" />
 
         </div>
-    </div>
 
-    <br/>
+        <br/>
 
+        <div class="row">
+            <div class="col-md-1">
+                <label for="priority">Priority: </label>
+            </div>
+            <div class="col-md-7">
 
-    <div class="row">
-        <div class="col-md-1">
-            <label for="ptask">Parent Task: </label>
+                <input class="form-control" type="range" name="priority" step="1" min="0" max="30" [(ngModel)]="tsk.priority" [disabled]="tsk.is_parent_task" />
+
+            </div>
         </div>
-        <div class="col-md-6">
 
-            <input class="form-control" type="text" name="ptask" readonly value="{{tsk.parent_task?.parent_task1 || ''}}"
-            />
-        </div>
-        <div class="col-md-1">
-            <input class="btn btn-secondary" type="button" value="Search" (click)="modal2.show()" />
-        </div>
-    </div>
+        <br/>
 
-    <br/>
 
-    <div class="row">
-        <div class="col-md-1">
-            <label for="startdt">Start Date:</label>
-        </div>
-        <div class="col-md-3">
+        <div class="row">
+            <div class="col-md-1">
+                <label for="ptask">Parent Task: </label>
+            </div>
+            <div class="col-md-6">
 
-            <input class="form-control input-sm" type="date" name="startdt" [(ngModel)]="tsk.start_dt" placeholder="Start Date" />
+                <input class="form-control" type="text" name="ptask" readonly value="{{tsk.parent_task?.parent_task1 || ''}}" />
+            </div>
+            <div class="col-md-1">
+                <input class="btn btn-secondary" type="button" value="Search" (click)="modal2.show()" [disabled]="tsk.is_parent_task" />
+            </div>
         </div>
-        <div class="col-md-1">
-            <label for="endt">End Date:</label>
-        </div>
-        <div class="col-md-3">
-            <input class="form-control input-sm" type="date" name="enddt" [(ngModel)]="tsk.end_dt" placeholder="End Date"  (blur) = "compareDates()" />
 
+        <br/>
+
+        <div class="row">
+            <div class="col-md-1">
+                <label for="startdt">Start Date:</label>
+            </div>
+            <div class="col-md-3">
+
+                <input class="form-control input-sm" type="date" name="startdt" [(ngModel)]="tsk.start_dt" placeholder="Start Date" [disabled]="tsk.is_parent_task"  />
+            </div>
+            <div class="col-md-1">
+                <label for="endt">End Date:</label>
+            </div>
+            <div class="col-md-3">
+                <input class="form-control input-sm" type="date" name="enddt" [(ngModel)]="tsk.end_dt" placeholder="End Date" (blur)="compareDates()"
+                [disabled]="tsk.is_parent_task" />
+
+            </div>
         </div>
-    </div>
-    <div class="row" *ngIf="errorDt">
+        <div class="row" *ngIf="errorDt">
             <div class="col-md-1">
             </div>
             <div class="col-md-7">
@@ -167,37 +174,37 @@
         </div>
 
 
-    <br/>
+        <br/>
 
-    <div class="row">
-        <div class="col-md-1">
-            <label for="mgrid">User: </label>
-        </div>
-        <div class="col-md-6">
+        <div class="row">
+            <div class="col-md-1">
+                <label for="mgrid">User: </label>
+            </div>
+            <div class="col-md-6">
 
-            <input class="form-control" type="text" name="ownerid" readonly value="{{tsk.owner == null ? '' : tsk.owner.first_name + ' ' + tsk.owner.last_name}}"
-            />
+                <input class="form-control" type="text" name="ownerid" readonly value="{{tsk.owner == null ? '' : tsk.owner.first_name + ' ' + tsk.owner.last_name}}"
+                />
+            </div>
+            <div class="col-md-1">
+                <input class="btn btn-secondary" type="button" value="Search" (click)="modal.show()" [disabled]="tsk.is_parent_task" />
+            </div>
         </div>
-        <div class="col-md-1">
-            <input class="btn btn-secondary" type="button" value="Search" (click)="modal.show()" />
-        </div>
-    </div>
 
-    <br/>
+        <br/>
 
-    <div class="row">
-        <div class="col-md-4">
-        </div>
-        <div class="col-md-1">
-            <button class="btn" type="submit" >{{action}}</button> 
-        </div>
-        <div class="col-md-1">
-            <input class="btn" type="button" value="Reset" />
+        <div class="row">
+            <div class="col-md-4">
+            </div>
+            <div class="col-md-1">
+                <button class="btn" type="submit">{{action}}</button>
+            </div>
+            <div class="col-md-1">
+                <button class="btn" type="button" (click)="resetTask()" > Reset </button>
 
+            </div>
+            <div class="col-md-2">
+            </div>
         </div>
-        <div class="col-md-2">
-        </div>
-    </div>
     </form>
 </div>
 <hr/>

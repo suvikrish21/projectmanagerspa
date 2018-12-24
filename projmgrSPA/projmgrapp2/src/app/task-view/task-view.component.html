@@ -1,3 +1,7 @@
+<div *ngIf="statusMessage" class="panel panel-info">
+        <div class="panel-body">{{statusMessage}}</div>
+</div>
+
 <app-modal #modal1>
         <div class="app-modal-header">
                 Project List
@@ -37,14 +41,23 @@
 
                 <div class="col-md-6">
                         Sort Task By:
-                        <input type="button" class="btn" value="Start Date" (click)="sortTaskBy('start_dt')" />
-                        <input type="button" class="btn" value="End Date" (click)="sortTaskBy('end_dt')" />
-                        <input type="button" class="btn" value="Priority" (click)="sortTaskBy('priority')" />
-                        <input type="button" class="btn" value="Completed" (click)="sortTaskBy('status')" />
+                        <input type="button" class="{{tskSortText=='start_dt' ? 'btn btn-primary' : 'btn'}}" value="Start Date" (click)="sortTaskBy('start_dt')"
+                        />
+                        <input type="button" class="{{tskSortText=='end_dt' ? 'btn btn-primary' : 'btn'}}" value="End Date" (click)="sortTaskBy('end_dt')"
+                        />
+                        <input type="button" class="{{tskSortText=='priority' ? 'btn btn-primary' : 'btn'}}" value="Priority" (click)="sortTaskBy('priority')"
+                        />
+                        <input type="button" class="{{tskSortText=='status' ? 'btn btn-primary' : 'btn'}}" value="Completed" (click)="sortTaskBy('status')"
+                        />
 
                 </div>
         </div>
 </div>
+
+<div *ngIf="projTskList != null && projTskList.length == 0" class="panel panel-info">
+        <div class="panel-body">No tasks available for this project</div>
+</div>
+
 <div *ngIf="projTskList" class="container">
 
 
@@ -122,7 +135,7 @@
                                 <div classs="col-md-2">
                                         <button type="button" class="btn" (click)=editTask(tsk.task_id)>Edit</button>
 
-                                        <button type="button" class="btn" (click)=endTask(tsk.task_id)>End Task</button>
+                                        <button type="button" class="btn" [disabled]="tsk.status === 'COMPLETE'" (click)=endTask(tsk)>End Task</button>
                                 </div>
 
 

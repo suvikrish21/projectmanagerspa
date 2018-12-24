@@ -44,18 +44,23 @@ namespace ProjMgrAPI.Tests.Controllers
         {
             var userCtrl = new UsersController();
 
+
+            var usr = userCtrl.Getusers().ToList().
+                        Where(u => u.project == null || u.task == null).
+                         First();
+
+
+
+
+            usr.last_name = "Knight2";
+            usr.first_name = "Nick1";
+            usr.emp_id = 52000;
+          
+
            
-            var user = new user()
-            {
-                last_name = "Knight2",
-                first_name = "Nick1",
-                emp_id = 52000,
-                 user_id = 1
-
-            };
 
 
-            IHttpActionResult actResult = userCtrl.Putuser(user.user_id, user);
+            IHttpActionResult actResult = userCtrl.Putuser(usr.user_id, usr);
             var createdResult = actResult as StatusCodeResult;
 
             Debug.WriteLine(actResult);
@@ -70,17 +75,21 @@ namespace ProjMgrAPI.Tests.Controllers
             var userCtrl = new UsersController();
 
 
-            var user = new user()
-            {
-                last_name = "Knight2",
-                first_name = "Nick1",
-                emp_id = 52000,
-                user_id = 1
+            var usr = userCtrl.Getusers().ToList().
+                        Where(u => u.project == null || u.task == null).
+                         First();
 
-            };
+
+
+            usr.last_name = "Knigh";
+            usr.first_name = "Nick";
+            usr.emp_id = 52000;
+              
+
+            
 
            
-            IHttpActionResult actResult = userCtrl.Putuser(2, user);
+            IHttpActionResult actResult = userCtrl.Putuser(usr.user_id, usr);
             var createdResult = actResult as BadRequestResult;
 
             Debug.WriteLine(actResult);
@@ -95,7 +104,10 @@ namespace ProjMgrAPI.Tests.Controllers
             var userCtrl = new UsersController();
 
 
-            int usrid = 2;
+            int  usrid = userCtrl.Getusers().ToList().
+                        Where(u => u.project == null || u.task == null).
+                         Max(u => u.user_id);
+            
 
 
             IHttpActionResult actResult = userCtrl.Getuser(usrid);
@@ -121,6 +133,23 @@ namespace ProjMgrAPI.Tests.Controllers
             Debug.WriteLine(actResult);
 
             Assert.AreEqual(actResult.Count , actResult.Count);
+        }
+
+
+        [TestCase]
+        public void GetUsers2TestMethod()
+        {
+            var userCtrl = new UsersController();
+
+
+
+
+            List<uservw> actResult = userCtrl.Getusers2().ToList();
+
+
+            Debug.WriteLine(actResult);
+
+            Assert.AreEqual(actResult.Count, actResult.Count);
         }
 
 

@@ -10,8 +10,8 @@ import{ Pipe, PipeTransform } from '@angular/core';
 
 export class ProjFilterPipe implements PipeTransform {
     transform(projs : any[], filterValue : any ) : any {
-        console.log(projs);
-        console.log(filterValue);
+        //console.log(projs);
+        //console.log(filterValue);
         if (!projs || !filterValue)
           return projs;
 

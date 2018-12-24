@@ -10,8 +10,8 @@ import{ Pipe, PipeTransform } from '@angular/core';
 
 export class UserFilterPipe implements PipeTransform {
     transform(users : any[], filterValue : any ) : any {
-        console.log(users);
-        console.log(filterValue);
+        //console.log(users);
+        //console.log(filterValue);
         if (!users || !filterValue)
           return users;
 

@@ -20,6 +20,7 @@ export class ProjectComponent implements OnInit {
   public usrList;
   public errorDt = false;
   public projSortText = "project1";
+  public statusMessage : string;
 
   constructor(private projmgrservice: ProjmgrapiService, private datepipe: DatePipe) { }
 
@@ -33,7 +34,7 @@ export class ProjectComponent implements OnInit {
 
   sortProjectBy(sortByValue) {
 
-
+    this.statusMessage = null;
     this.projSortText = sortByValue;
   }
 
@@ -48,7 +49,7 @@ export class ProjectComponent implements OnInit {
   setProjectDates(e: Event) {
 
     var chkbox = e.target as HTMLInputElement;
-    console.log("set project dates " + chkbox.checked);
+    //console.log("set project dates " + chkbox.checked);
 
 
 
@@ -67,11 +68,11 @@ export class ProjectComponent implements OnInit {
 
   getUsers() {
 
-    const url = AppSettings.ProjectAPIEndPoint + "/users/";
+    const url = AppSettings.ProjectAPIEndPoint + "/users/summary/";
 
     this.projmgrservice.get(url).subscribe(
       res => {
-        console.log(res);
+        //console.log(res);
         this.usrList = res;
       }
     )
@@ -79,13 +80,14 @@ export class ProjectComponent implements OnInit {
 
   editProject(projectid: number) {
 
+    this.statusMessage = null;
 
     const url = AppSettings.ProjectAPIEndPoint + "/projects/";
 
 
     this.projmgrservice.get(url + projectid).subscribe(
       res => {
-        console.log(res);
+        //console.log(res);
 
         this.proj =
           {
@@ -99,7 +101,7 @@ export class ProjectComponent implements OnInit {
 
           };
 
-          console.log("duration " +this.proj.is_duration);
+          //console.log("duration " +this.proj.is_duration);
 
         this.action = "Update";
       }
@@ -107,10 +109,19 @@ export class ProjectComponent implements OnInit {
 
   }
 
+  resetProject() {
 
+    this.proj = new ProjectData();
+    this.statusMessage = null;
+    this.action = "Add";
+
+  }
 
 
   addProject(isValid: boolean) {
+
+    if (this.errorDt)
+        return;
 
     if (isValid) {
 
@@ -134,7 +145,8 @@ export class ProjectComponent implements OnInit {
 
         this.projmgrservice.post(url, newProj).subscribe(
           res => {
-            console.log(res);
+            //console.log(res);
+            this.statusMessage = "Project Added";
 
             this.getProjects();
           }
@@ -161,9 +173,9 @@ export class ProjectComponent implements OnInit {
 
         this.projmgrservice.put(url, editProj.project_id, editProj).subscribe(
           res => {
-            console.log(res);
+            //console.log(res);
 
-
+            this.statusMessage = "Project Updated";
             this.getProjects();
           }
         );
@@ -175,12 +187,12 @@ export class ProjectComponent implements OnInit {
 
   getProjects() {
 
-    const url = AppSettings.ProjectAPIEndPoint + "/projects/";
+    const url = AppSettings.ProjectAPIEndPoint + "/projects/summary/";
 
 
     this.projmgrservice.get(url).subscribe(
       res => {
-        console.log(res);
+        //console.log(res);
         this.projList = res;
       }
     )

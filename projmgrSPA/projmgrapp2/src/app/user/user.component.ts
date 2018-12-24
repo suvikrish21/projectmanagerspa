@@ -16,6 +16,7 @@ export class UserComponent implements OnInit {
   public action = "Add";
 
   public sortText = "first_name";
+  public statusMessage : string;
 
   constructor(private projmgrservice: ProjmgrapiService) {
     this.getUsers();
@@ -26,12 +27,14 @@ export class UserComponent implements OnInit {
 
   sortUserBy(sortByValue) {
 
+    this.statusMessage = null;
     this.sortText = sortByValue;
   }
 
   resetUser() {
 
     this.user = new UserData();
+    this.statusMessage = null;
     this.action = "Add";
 
   }
@@ -42,7 +45,9 @@ export class UserComponent implements OnInit {
 
     this.projmgrservice.delete(url, userid).subscribe(
       res => {
-        console.log(res);
+        //console.log(res);
+        this.statusMessage = " User Deleted";
+          
 
         this.getUsers();
       }
@@ -52,11 +57,12 @@ export class UserComponent implements OnInit {
 
   editUser(userid: number) {
 
+    this.statusMessage = null;
     const url = AppSettings.ProjectAPIEndPoint + "/users/";
 
     this.projmgrservice.get(url + userid).subscribe(
       res => {
-        console.log(res);
+        //console.log(res);
         this.user =
 
           {
@@ -92,8 +98,10 @@ export class UserComponent implements OnInit {
 
         this.projmgrservice.post(url, newUser).subscribe(
           res => {
-            console.log(res);
+            //console.log(res);
 
+            this.statusMessage = " User Added";
+            
 
             this.getUsers();
           }
@@ -110,8 +118,9 @@ export class UserComponent implements OnInit {
 
         this.projmgrservice.put(url, editUser.user_id, editUser).subscribe(
           res => {
-            console.log(res);
-
+            //console.log(res);
+            this.statusMessage = " User Updated";
+          
 
             this.getUsers();
           }
@@ -127,12 +136,12 @@ export class UserComponent implements OnInit {
 
   getUsers() {
 
-    const url = AppSettings.ProjectAPIEndPoint + "/users/";
+    const url = AppSettings.ProjectAPIEndPoint + "/users/summary/";
 
 
     this.projmgrservice.get(url).subscribe(
       res => {
-        console.log(res);
+        //console.log(res);
         this.userList = res;
       }
     )

@@ -25,6 +25,21 @@ namespace ProjMgrAPI.Controllers
             return db.users;
         }
 
+        [Route("api/users/summary")]
+        public IQueryable<uservw> Getusers2()
+        {
+            return db.users.Select(u=> new uservw()
+            {
+                 emp_id  = u.emp_id,
+                  first_name = u.first_name,
+                  last_name = u.last_name,
+                   project_id = u.project_id,
+                   task_id = u.task_id,
+                  user_id = u.user_id
+
+            });
+        }
+
         // GET: api/Users/5
         [ResponseType(typeof(user))]
         public IHttpActionResult Getuser(int id)
@@ -124,5 +139,16 @@ namespace ProjMgrAPI.Controllers
         //{
            // return db.users.Count(e => e.user_id == id) > 0;
         //}
+    }
+
+
+    public class uservw
+    {
+        public int user_id { get; set; }
+        public string first_name { get; set; }
+        public string last_name { get; set; }
+        public Nullable<int> emp_id { get; set; }
+        public Nullable<int> project_id { get; set; }
+        public Nullable<int> task_id { get; set; }
     }
 }

@@ -13,15 +13,34 @@ using System.Web.Http.Cors;
 
 namespace ProjMgrAPI.Controllers
 {
+
+
+
     [EnableCors("*", "*", "*")]
     public class ProjectsController : ApiController
     {
         private ProjectManagerSPAEntities db = new ProjectManagerSPAEntities();
 
+
         // GET: api/Projects
         public IQueryable<project> Getprojects()
         {
             return db.projects;
+        }
+
+        [Route("api/projects/summary")]
+        public IQueryable<projectvw> Getprojects2()
+        {
+            return db.projects.Select(p => new projectvw()
+            {
+                end_dt = p.end_dt,
+                priority = p.priority,
+                project1 = p.project1,
+                project_id = p.project_id,
+                start_dt = p.start_dt,
+                total_tasks = p.tasks.Count,
+                completed_tasks = p.tasks.Count(t=> t.status == "COMPLETE")
+            });
         }
 
         // GET: api/Projects/5
@@ -67,7 +86,7 @@ namespace ProjMgrAPI.Controllers
                 //}
                 //else
                 //{
-                    throw;
+                throw;
                 //}
             }
 
@@ -133,5 +152,20 @@ namespace ProjMgrAPI.Controllers
         //{
         //    return db.projects.Count(e => e.project_id == id) > 0;
         //}
+    }
+
+
+
+    public class projectvw
+    {
+        public int project_id { get; set; }
+        public string project1 { get; set; }
+        public Nullable<System.DateTime> start_dt { get; set; }
+        public Nullable<System.DateTime> end_dt { get; set; }
+        public Nullable<int> priority { get; set; }
+
+        public int total_tasks { get; set; }
+
+        public int completed_tasks { get; set; }
     }
 }

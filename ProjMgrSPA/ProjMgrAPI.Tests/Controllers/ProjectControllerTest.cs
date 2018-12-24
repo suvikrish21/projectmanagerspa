@@ -69,8 +69,14 @@ namespace ProjMgrAPI.Tests.Controllers
         public void AddProjectTestMethod2()
         {
             var projctrl = new ProjectsController();
+            var userCtrl = new UsersController();
 
-            var usr = new user { user_id = 2 };
+            var userid = userCtrl.Getusers().ToList().
+                       Where(u => u.project == null || u.task == null).
+                        Max(u => u.user_id);
+
+
+            var usr = new user { user_id = userid };
 
             var proj = new project()
             {
@@ -98,12 +104,14 @@ namespace ProjMgrAPI.Tests.Controllers
             var projCtrl = new ProjectsController();
 
 
-            var proj = new project()
-            {
-                project1 ="Project XYZ",
-                 project_id = 2
-                  
-            };
+            var proj = projCtrl.Getprojects().ToList().
+                          Where(p => p.users == null || p.users.Count == 0).
+                          First();
+
+
+
+            proj.project1 = "Project XYZ";
+               
 
 
             IHttpActionResult actResult = projCtrl.Putproject(proj.project_id, proj);
@@ -121,7 +129,10 @@ namespace ProjMgrAPI.Tests.Controllers
             var projCtrl = new ProjectsController();
 
 
-            int projid = 2;
+            int projid  = projCtrl.Getprojects().ToList().
+                          Where(p => p.users == null || p.users.Count == 0).
+                          Max(p => p.project_id);
+
 
 
             IHttpActionResult actResult = projCtrl.Getproject(projid);
@@ -142,6 +153,24 @@ namespace ProjMgrAPI.Tests.Controllers
 
 
             List<project> actResult = projCtrl.Getprojects().ToList();
+
+
+            Debug.WriteLine(actResult);
+
+            Assert.AreEqual(actResult.Count, actResult.Count);
+        }
+
+
+
+        [TestCase]
+        public void GetProjects2TestMethod()
+        {
+            var projCtrl = new ProjectsController();
+
+
+
+
+            List<projectvw> actResult = projCtrl.Getprojects2().ToList();
 
 
             Debug.WriteLine(actResult);

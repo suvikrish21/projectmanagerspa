@@ -18,6 +18,7 @@ export class TaskViewComponent implements OnInit {
   public tskvw = new TaskData();
   public projList;
   public projTskList;
+  public statusMessage : string;
 
   constructor(private projmgrservice: ProjmgrapiService,
     private router: Router,
@@ -33,7 +34,7 @@ export class TaskViewComponent implements OnInit {
 
   editTask(tskid: number) {
 
-
+  
     this.router.navigate(['./taskAdd/' + tskid]);
 
   }
@@ -43,19 +44,37 @@ export class TaskViewComponent implements OnInit {
   getProjects() {
 
 
-    const url = AppSettings.ProjectAPIEndPoint + "/projects/";
+    const url = AppSettings.ProjectAPIEndPoint + "/projects/summary/";
 
     this.projmgrservice.get(url).subscribe(
       res => {
-        console.log(res);
+        //console.log(res);
         this.projList = res;
       }
     )
   }
 
+  endTask(tsk: any) {
+
+   
+    const url = AppSettings.ProjectAPIEndPoint + "/tasks/";
+
+    tsk.status = "COMPLETE";
+    this.projmgrservice.put(url, tsk.task_id, tsk).subscribe(
+      res => {
+        //console.log(res);
+
+        this.statusMessage = "Task Completed";
+  
+        this.getTasks();
+      }
+    )
+
+  }
+
   sortTaskBy(sortByValue) {
 
-
+    this.statusMessage = null;
     this.tskSortText = sortByValue;
   }
 
@@ -77,7 +96,7 @@ export class TaskViewComponent implements OnInit {
 
     this.projmgrservice.get(url).subscribe(
       res => {
-        console.log(res);
+        //console.log(res);
         this.tskList = res;
       }
     )

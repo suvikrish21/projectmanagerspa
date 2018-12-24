@@ -53,9 +53,9 @@ options).pipe(map(resp => <any> resp.json()));
 
    let body = JSON.stringify(model);
 
-   console.log(body);
+   //console.log(body);
    //console.log(options);
-   console.log(headers);
+   //console.log(headers);
 
     return this.http.post(url, body, {headers : headers}).
     pipe(map(resp => 
@@ -72,7 +72,7 @@ options).pipe(map(resp => <any> resp.json()));
 
     return this.http.get(url).pipe(map(res =>
       {
-        console.log(res.json());
+        //console.log(res.json());
         //const data = JSON.parse(res.text());
           
         return res.json();

@@ -21,7 +21,7 @@ export class TaskAddComponent implements OnInit {
   public projList;
   public parentTaskList;
   public errorDt = false;
-
+  public statusMessage : string;
 
   constructor(private projmgrservice: ProjmgrapiService,
     private datepipe: DatePipe,
@@ -40,8 +40,18 @@ export class TaskAddComponent implements OnInit {
 
     if (params.id > 0)
       this.editTask(params.id);
+    else
+       this.setTaskDates();
 
 
+  }
+
+  setTaskDates() {
+
+      var todayDt = Date.now();
+      this.tsk.start_dt = this.datepipe.transform(todayDt, "yyyy-MM-dd");
+      this.tsk.end_dt = this.datepipe.transform((todayDt + 86400 * 1000), "yyyy-MM-dd");
+    
   }
 
   compareDates() {
@@ -51,15 +61,25 @@ export class TaskAddComponent implements OnInit {
 
   }
 
+  resetTask() {
+
+    this.tsk = new TaskData();
+    this.statusMessage = null;
+    this.action = "Add";
+    this.setTaskDates();
+
+  }
+
   editTask(taskid: number) {
 
+    this.statusMessage = null;
 
     const url = AppSettings.ProjectAPIEndPoint + "/tasks/";
 
 
     this.projmgrservice.get(url + taskid).subscribe(
       res => {
-        console.log(res);
+        //console.log(res);
 
         this.tsk =
           {
@@ -85,11 +105,11 @@ export class TaskAddComponent implements OnInit {
   getProjects() {
 
 
-    const url = AppSettings.ProjectAPIEndPoint + "/projects/";
+    const url = AppSettings.ProjectAPIEndPoint + "/projects/summary/";
 
     this.projmgrservice.get(url).subscribe(
       res => {
-        console.log(res);
+        //console.log(res);
         this.projList = res;
       }
     )
@@ -102,7 +122,7 @@ export class TaskAddComponent implements OnInit {
 
     this.projmgrservice.get(url).subscribe(
       res => {
-        console.log(res);
+        //console.log(res);
         this.parentTaskList = res;
       }
     )
@@ -110,12 +130,12 @@ export class TaskAddComponent implements OnInit {
 
   getUsers() {
 
-    const url = AppSettings.ProjectAPIEndPoint + "/users/";
+    const url = AppSettings.ProjectAPIEndPoint + "/users/summary/";
 
 
     this.projmgrservice.get(url).subscribe(
       res => {
-        console.log(res);
+        //console.log(res);
         this.usrList = res;
       }
     )
@@ -125,6 +145,9 @@ export class TaskAddComponent implements OnInit {
 
     if (!isValid)
       return;
+
+    if (this.errorDt)
+         return;
 
     var newtsk;
     var url;
@@ -148,8 +171,9 @@ export class TaskAddComponent implements OnInit {
 
       this.projmgrservice.put(url, newtsk.task_id, newtsk).subscribe(
         res => {
-          console.log(res);
-
+          //console.log(res);
+          
+          this.statusMessage ="Task Updated";
 
           this.getProjects();
         }
@@ -190,8 +214,10 @@ export class TaskAddComponent implements OnInit {
 
       this.projmgrservice.post(url, newtsk).subscribe(
         res => {
-          console.log(res);
+          //console.log(res);
+          this.statusMessage ="Task Added";
 
+          this.getParentTasks();
 
         }
       );
