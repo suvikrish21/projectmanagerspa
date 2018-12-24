@@ -11,9 +11,11 @@ import { TagContentType } from '@angular/compiler';
 
 const routes: Routes = [
 
+
   { path : "project" , component :  ProjectComponent},
   { path : "user", component: UserComponent},
-  { path : "taskAdd", component : TaskAddComponent},
+  { path : "taskAdd" , component : TaskAddComponent},
+  { path : "taskAdd/:id", component : TaskAddComponent},
   { path : "taskView", component : TaskViewComponent},
 
 ];

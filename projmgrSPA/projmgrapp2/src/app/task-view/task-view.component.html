@@ -1,86 +1,145 @@
-<div *ngIf="projList" class="container">
-
-
-    <div>
-            <input type="Search" placeholder="Search Projects" [(ngModel)]="projSrchText" />
-   </div>
-
-   <div>
-         Sort By:
-         <input type="button" class="btn" value="Start Date" (click)="sortProjectBy('start_dt')"  />
-         <input type="button" class="btn" value="End Date" (click)="sortProjectBy('end_dt')"  />
-         <input type="button" class="btn" value="Priority" (click)="sortProjectBy('priority')"  />
-         <input type="button" class="btn" value="Completed" (click)="sortProjectBy('status')"  />
-
-   </div>
-
-
- <div class="list-group" *ngFor="let proj of projList  | projfilter:projSrchText | projsort: projSortText">
-    
-    <div class="list-group-item">
-
-
-            <div class="row">
-                    <div class="col-md-5">
-
-       
-        Project:   {{proj.project1}} 
-       </div>
-
-       <div class="col-md-1">
-
-       
-       Priority: {{proj.priority}} 
-    </div>
-
-       <div classs="col-md-2">
-        <button type="button" class="btn" (click)=editProject(proj.project_id)>Update</button>
+<app-modal #modal1>
+        <div class="app-modal-header">
+                Project List
         </div>
-    </div>
+        <div class="app-modal-body">
+
+                <input type="Search" placeholder="Search Projects" [(ngModel)]="projSrchText" />
 
 
+                <ul class="list-group">
 
-       <div class="row">
-        <div class="col-md-3">
+                        <li class="list-group-item" *ngFor="let proj of projList | projfilter:projSrchText">
+                                <input type="radio" name="projs" (click)="getProjectTask(proj)" /> {{proj.project1}}
+                        </li>
+                </ul>
+        </div>
+        <div class="app-modal-footer">
+                <button type="button" class="btn btn-default" (click)="modal1.hide()">Close</button>
+        </div>
+</app-modal>
 
-
-Start Date: {{proj.start_dt | date:'dd-MM-yyyy'}} 
-</div>
-
-<div class="col-md-3">
-
-
-End date: {{proj.end_dt | date:'dd-MM-yyyy'}} 
-</div>
-
-
-<div classs="col-md-2">
-<button type="button" class="btn">Suspend</button>
-</div>
-</div>
-    
-       
-       
-
+<div class="container">
 
         <div class="row">
-                <div class="col-md-3">
-    
-    
-       No of Tasks: {{proj.tasks?.length || '0'}}
-    </div>
-    
-        <div class="col-md-3">
-    
-    
-    Completed: {{proj.tasks?.length || '0'}}
-    </div>
-    </div>
-</div>
-   
-   
+                <div class="col-md-1">
+                        <label for="proj">Project: </label>
+                </div>
+                <div class="col-md-4">
 
+                        <input class="form-control" type="text" name="proj" readonly value="{{tskvw.project == null ? '' : tskvw.project.project1}}"
+                        />
+                </div>
+                <div class="col-md-1">
+                        <input class="btn btn-secondary" type="button" value="Search" (click)="modal1.show()" />
+                </div>
+
+
+                <div class="col-md-6">
+                        Sort Task By:
+                        <input type="button" class="btn" value="Start Date" (click)="sortTaskBy('start_dt')" />
+                        <input type="button" class="btn" value="End Date" (click)="sortTaskBy('end_dt')" />
+                        <input type="button" class="btn" value="Priority" (click)="sortTaskBy('priority')" />
+                        <input type="button" class="btn" value="Completed" (click)="sortTaskBy('status')" />
+
+                </div>
+        </div>
 </div>
+<div *ngIf="projTskList" class="container">
+
+
+
+        <div class="list-group" *ngFor="let tsk of projTskList | projsort: tskSortText">
+
+                <div class="list-group-item">
+
+
+                        <div class="row">
+
+                                <div class="col-md-2">
+
+
+                                        <label> Task </label>
+                                </div>
+
+                                <div class="col-md-2">
+
+
+                                        <label> Parent</label>
+                                </div>
+
+                                <div class="col-md-1">
+
+
+                                        <label> Priority</label>
+                                </div>
+                                <div class="col-md-2">
+
+
+                                        <label> Start</label>
+                                </div>
+
+
+                                <div class="col-md-2">
+
+                                        <label> End</label>
+
+                                </div>
+                        </div>
+
+                        <div class="row">
+
+                                <div class="col-md-2">
+
+
+                                        {{tsk.task1}}
+                                </div>
+
+                                <div class="col-md-2">
+
+
+                                        {{tsk.parent_task?.parent_task1 || 'No Parent Task' }}
+                                </div>
+
+                                <div class="col-md-1">
+
+
+                                        {{tsk.priority}}
+                                </div>
+                                <div class="col-md-2">
+
+
+                                        {{tsk.start_dt | date:'dd-MM-yyyy'}}
+                                </div>
+
+
+                                <div class="col-md-2">
+
+
+                                        {{tsk.end_dt | date:'dd-MM-yyyy'}}
+                                </div>
+
+                                <div classs="col-md-2">
+                                        <button type="button" class="btn" (click)=editTask(tsk.task_id)>Edit</button>
+
+                                        <button type="button" class="btn" (click)=endTask(tsk.task_id)>End Task</button>
+                                </div>
+
+
+
+
+
+
+
+
+
+
+                        </div>
+                </div>
+
+
+
+        </div>
 
 
 

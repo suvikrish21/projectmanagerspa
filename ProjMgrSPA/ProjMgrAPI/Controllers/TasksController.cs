@@ -51,6 +51,8 @@ namespace ProjMgrAPI.Controllers
                 return BadRequest();
             }
 
+            MapTaskUser(task);
+
             db.Entry(task).State = EntityState.Modified;
 
             try

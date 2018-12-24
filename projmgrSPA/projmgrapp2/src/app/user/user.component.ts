@@ -11,130 +11,130 @@ import { AppSettings } from 'src/app/app_settings';
 })
 export class UserComponent implements OnInit {
 
-   public userList; 
-   public user = new UserData(); 
-   public action = "Add";
+  public userList;
+  public user = new UserData();
+  public action = "Add";
 
-   public sortText = "first_name";
+  public sortText = "first_name";
 
-  constructor(private projmgrservice : ProjmgrapiService) { 
-      this.getUsers();
+  constructor(private projmgrservice: ProjmgrapiService) {
+    this.getUsers();
   }
 
   ngOnInit() {
   }
 
-   sortUserBy(sortByValue) {
+  sortUserBy(sortByValue) {
 
     this.sortText = sortByValue;
-   }
+  }
 
-   resetUser() {
+  resetUser() {
 
     this.user = new UserData();
     this.action = "Add";
 
-   }
+  }
 
-  deleteUser(userid : number) {
+  deleteUser(userid: number) {
 
     const url = AppSettings.ProjectAPIEndPoint + "/users/";
-  
+
     this.projmgrservice.delete(url, userid).subscribe(
       res => {
         console.log(res);
-        
+
         this.getUsers();
       }
-   )
+    )
   }
 
 
-  editUser(userid : number) {
+  editUser(userid: number) {
 
     const url = AppSettings.ProjectAPIEndPoint + "/users/";
-  
+
     this.projmgrservice.get(url + userid).subscribe(
       res => {
         console.log(res);
-        this.user = 
+        this.user =
 
-        {
-        employee_id : res.emp_id ,
-        first_name : res.first_name, 
-        last_name : res.last_name, 
-        user_id : res.user_id
-        };
+          {
+            employee_id: res.emp_id,
+            first_name: res.first_name,
+            last_name: res.last_name,
+            user_id: res.user_id
+          };
 
         this.action = "Update";
       }
-   )
+    )
 
   }
 
-  addUser(isValid : boolean) {
+  addUser(isValid: boolean) {
 
     if (isValid) {
 
-    const url = AppSettings.ProjectAPIEndPoint + "/users/";
-  
-   
-
-    if (this.action == "Add")  {
-
-      var newUser = {
-        "first_name" : this.user.first_name,
-        "last_name" : this.user.last_name, 
-        "emp_id" : this.user.employee_id, 
-       
-       };
+      const url = AppSettings.ProjectAPIEndPoint + "/users/";
 
 
-    this.projmgrservice.post(url, newUser).subscribe(
-      res => {
-        console.log(res);
+
+      if (this.action == "Add") {
+
+        var newUser = {
+          "first_name": this.user.first_name,
+          "last_name": this.user.last_name,
+          "emp_id": this.user.employee_id,
+
+        };
 
 
-        this.getUsers();
+        this.projmgrservice.post(url, newUser).subscribe(
+          res => {
+            console.log(res);
+
+
+            this.getUsers();
+          }
+        );
       }
-    );
-  } 
-  if (this.action == "Update") {
+      if (this.action == "Update") {
 
-    var editUser = {
-      "first_name" : this.user.first_name,
-      "last_name" : this.user.last_name, 
-      "emp_id" : this.user.employee_id, 
-      "user_id" : this.user.user_id
-     };
+        var editUser = {
+          "first_name": this.user.first_name,
+          "last_name": this.user.last_name,
+          "emp_id": this.user.employee_id,
+          "user_id": this.user.user_id
+        };
 
-    this.projmgrservice.put(url, editUser.user_id, editUser).subscribe(
-      res => {
-        console.log(res);
+        this.projmgrservice.put(url, editUser.user_id, editUser).subscribe(
+          res => {
+            console.log(res);
 
 
-        this.getUsers();
+            this.getUsers();
+          }
+        );
+
       }
-    );
-
-  }
 
 
-  }
+    }
 
-    
+
   }
 
   getUsers() {
-   
+
     const url = AppSettings.ProjectAPIEndPoint + "/users/";
-  
+
 
     this.projmgrservice.get(url).subscribe(
-       res => {
-         console.log(res);
-         this.userList = res;
-       }
+      res => {
+        console.log(res);
+        this.userList = res;
+      }
     )
   }
 
