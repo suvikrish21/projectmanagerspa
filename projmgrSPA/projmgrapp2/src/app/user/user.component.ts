@@ -104,7 +104,12 @@ export class UserComponent implements OnInit {
             
 
             this.getUsers();
-          }
+          } ,
+        
+        error => {
+        //console.log(error);
+        this.statusMessage =  "Unable to process the user request";
+      }
         );
       }
       if (this.action == "Update") {
@@ -143,6 +148,10 @@ export class UserComponent implements OnInit {
       res => {
         //console.log(res);
         this.userList = res;
+      } ,
+      error => {
+        //console.log(error);
+        this.statusMessage =  "Unable to fetch the users";
       }
     )
   }

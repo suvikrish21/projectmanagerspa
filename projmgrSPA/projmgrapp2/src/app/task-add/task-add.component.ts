@@ -222,7 +222,12 @@ export class TaskAddComponent implements OnInit {
 
           this.getParentTasks();
 
-        }
+        } ,
+        
+        error => {
+        //console.log(error);
+        this.statusMessage =  "Unable to process the task request";
+      }
       );
 
 

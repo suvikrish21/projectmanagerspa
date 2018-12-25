@@ -149,7 +149,13 @@ export class ProjectComponent implements OnInit {
             this.statusMessage = "Project Added";
 
             this.getProjects();
-          }
+          } ,
+           
+        
+        error => {
+        //console.log(error);
+        this.statusMessage =  "Unable to process the project request";
+      }
         );
 
 
@@ -194,6 +200,11 @@ export class ProjectComponent implements OnInit {
       res => {
         //console.log(res);
         this.projList = res;
+      }    ,
+        
+        error => {
+        //console.log(error);
+        this.statusMessage =  "Unable to fetch the projects";
       }
     )
   }
