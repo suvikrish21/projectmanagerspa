@@ -39,6 +39,31 @@ namespace ProjMgrAPI.Tests.Controllers
             Assert.AreEqual("DefaultApi", createdResult.RouteName);
         }
 
+
+        [TestCase]
+        public void AddUser2TestMethod()
+        {
+            var userCtrl = new UsersController();
+
+
+            var user = new user()
+            {
+                last_name = "test",
+                first_name = "aryan",
+                emp_id = 251683
+
+            };
+
+
+            IHttpActionResult actResult = userCtrl.Postuser(user);
+            var createdResult = actResult as CreatedAtRouteNegotiatedContentResult<user>;
+
+            Debug.WriteLine(actResult);
+            userCtrl.Dispose();
+
+            Assert.AreEqual("DefaultApi", createdResult.RouteName);
+        }
+
         [TestCase]
         public void EditUserTestMethod()
         {
