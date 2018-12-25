@@ -4,7 +4,7 @@ import { DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
 
 import { TaskData } from '../taskdatamodel';
-import { AppSettings } from 'src/app/app_settings';
+import { AppSettings } from '../app_settings';
 
 @Component({
   selector: 'app-task-view',
@@ -19,6 +19,7 @@ export class TaskViewComponent implements OnInit {
   public projList;
   public projTskList;
   public statusMessage : string;
+  public projSrchText;
 
   constructor(private projmgrservice: ProjmgrapiService,
     private router: Router,

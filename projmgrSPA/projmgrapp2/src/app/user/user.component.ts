@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProjmgrapiService } from '../projmgrapi.service';
 import { UserData } from '../usrdatamodel';
-import { AppSettings } from 'src/app/app_settings';
+import { AppSettings } from '../app_settings';
 
 
 @Component({

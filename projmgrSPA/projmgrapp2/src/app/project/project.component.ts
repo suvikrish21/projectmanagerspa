@@ -3,7 +3,7 @@ import { ProjmgrapiService } from '../projmgrapi.service';
 import { DatePipe } from '@angular/common';
 
 import { ProjectData } from '../projdatamodel';
-import { AppSettings } from 'src/app/app_settings';
+import { AppSettings } from '../app_settings';
 
 @Component({
   selector: 'app-project',
@@ -14,7 +14,7 @@ export class ProjectComponent implements OnInit {
 
 
   public projList;
-
+  public usrSrchText;
   public proj = new ProjectData();
   public action = "Add";
   public usrList;

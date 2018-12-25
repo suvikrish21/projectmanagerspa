@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ProjmgrapiService } from '../projmgrapi.service';
 import { DatePipe } from '@angular/common';
 import { TaskData } from '../taskdatamodel';
-import { AppSettings } from 'src/app/app_settings';
-import { ProjectData } from 'src/app/projdatamodel';
+import { AppSettings } from '../app_settings';
+import { ProjectData } from '../projdatamodel';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -22,6 +22,9 @@ export class TaskAddComponent implements OnInit {
   public parentTaskList;
   public errorDt = false;
   public statusMessage : string;
+  public usrSrchText;
+  public projSrchText;
+  public pTaskSrchText;
 
   constructor(private projmgrservice: ProjmgrapiService,
     private datepipe: DatePipe,
