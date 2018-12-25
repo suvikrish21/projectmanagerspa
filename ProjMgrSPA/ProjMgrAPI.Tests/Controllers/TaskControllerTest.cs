@@ -81,6 +81,38 @@ namespace ProjMgrAPI.Tests.Controllers
             Assert.AreEqual("DefaultApi", createdResult.RouteName);
         }
 
+
+        [TestCase]
+
+        public void AddTaskTestMethod1()
+        {
+            var taskCtrl = new TasksController();
+
+         
+
+          
+            var tsk = new task()
+            {
+                task1 = "TASK GH",
+                start_dt = DateTime.Now,
+                end_dt = DateTime.Now.AddDays(1),
+                priority = 15,
+                status = "NEW",
+
+
+            };
+
+
+
+            IHttpActionResult actResult = taskCtrl.Posttask(tsk);
+            var createdResult = actResult as CreatedAtRouteNegotiatedContentResult<task>;
+
+            Debug.WriteLine(actResult);
+            taskCtrl.Dispose();
+
+            Assert.AreEqual("DefaultApi", createdResult.RouteName);
+        }
+
         [TestCase]
 
         public void AddTaskTestMethod()
