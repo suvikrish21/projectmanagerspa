@@ -144,7 +144,7 @@
     </div>
 
 
-    <div class="list-group" *ngFor="let proj of projList  | projfilter:projSrchText | projsort: projSortText">
+    <div class="list-group" *ngFor="let proj of projList  | projfilter:projSrchText | projsort: projSortText | slice:0:50 ">
 
         <div class="list-group-item">
 

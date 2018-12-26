@@ -85,7 +85,7 @@ export class TaskViewComponent implements OnInit {
     this.tskvw.project = project;
 
     this.projTskList = this.tskList.
-      filter((tsk1: any) => tsk1.project.project_id === project.project_id);
+      filter((tsk1: any) => tsk1.project !== null && tsk1.project.project_id === project.project_id);
 
 
   }
