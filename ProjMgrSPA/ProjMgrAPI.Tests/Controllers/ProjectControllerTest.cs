@@ -12,10 +12,15 @@ using System.Net;
 
 namespace ProjMgrAPI.Tests.Controllers
 {
+
+    
+
     [TestFixture]
     public class ProjectControllerTest
     {
-        [TestCase]
+        private int TestId { get; set; }
+
+        [TestCase, Order(1)]
         public void AddProjectTestMethod()
         {
             var projctrl = new ProjectsController();
@@ -35,10 +40,12 @@ namespace ProjMgrAPI.Tests.Controllers
             Debug.WriteLine(actResult);
 
             Assert.AreEqual("DefaultApi", createdResult.RouteName);
+
+            TestId = proj.project_id;
         }
 
 
-        [TestCase]
+        [TestCase, Order(2)]
         public void AddProjectTestMethod1()
         {
             var projctrl = new ProjectsController();
@@ -65,7 +72,7 @@ namespace ProjMgrAPI.Tests.Controllers
             Assert.AreEqual("DefaultApi", createdResult.RouteName);
         }
 
-        [TestCase]
+        [TestCase, Order(3)]
         public void AddProjectTestMethod2()
         {
             var projctrl = new ProjectsController();
@@ -98,15 +105,15 @@ namespace ProjMgrAPI.Tests.Controllers
             Assert.AreEqual("DefaultApi", createdResult.RouteName);
         }
 
-        [TestCase]
+        [TestCase, Order(4)]
         public void EditProjectTestMethod()
         {
             var projCtrl = new ProjectsController();
 
 
             var proj = projCtrl.Getprojects().ToList().
-                          Where(p => p.users == null || p.users.Count == 0).
-                          First();
+                          //Where(p => p.users == null || p.users.Count == 0).
+                          First(p=> p.project_id == TestId);
 
 
 
@@ -123,15 +130,15 @@ namespace ProjMgrAPI.Tests.Controllers
         }
 
 
-        [TestCase]
+        [TestCase, Order(5)]
         public void GetProjectTestMethod()
         {
             var projCtrl = new ProjectsController();
 
 
-            int projid  = projCtrl.Getprojects().ToList().
-                          Where(p => p.users == null || p.users.Count == 0).
-                          Max(p => p.project_id);
+            int projid = TestId;
+
+
 
 
 
@@ -144,7 +151,7 @@ namespace ProjMgrAPI.Tests.Controllers
         }
 
 
-        [TestCase]
+        [TestCase, Order(6)]
         public void GetProjectsTestMethod()
         {
             var projCtrl = new ProjectsController();
@@ -162,7 +169,7 @@ namespace ProjMgrAPI.Tests.Controllers
 
 
 
-        [TestCase]
+        [TestCase, Order(7)]
         public void GetProjects2TestMethod()
         {
             var projCtrl = new ProjectsController();
@@ -180,17 +187,16 @@ namespace ProjMgrAPI.Tests.Controllers
 
 
 
-        [TestCase]
+        [TestCase, Order(8)]
         public void DeleteProjectTestMethod()
         {
             var projCtrl = new ProjectsController();
 
-            var projid = projCtrl.Getprojects().ToList().
-                           Where(p=> p.users == null || p.users.Count == 0).
-                           Max(p=>p.project_id);
+            var projid = TestId;
 
 
-           
+
+
             var actResult = projCtrl.Deleteproject(projid);
 
             var createdResult = actResult as OkNegotiatedContentResult<project>;

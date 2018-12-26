@@ -15,7 +15,9 @@ namespace ProjMgrAPI.Tests.Controllers
     [TestFixture]
     public class TaskControllerTest
     {
-        [TestCase]
+        private int TestId { get; set; }
+
+        [TestCase, Order(1)]
         public void AddParentTaskTestMethod()
         {
             var taskCtrl = new PTasksController();
@@ -37,7 +39,7 @@ namespace ProjMgrAPI.Tests.Controllers
         }
 
 
-        [TestCase]
+        [TestCase, Order(2)]
 
         public void AddTaskTestMethod2()
         {
@@ -82,7 +84,7 @@ namespace ProjMgrAPI.Tests.Controllers
         }
 
 
-        [TestCase]
+        [TestCase, Order(3)]
 
         public void AddTaskTestMethod1()
         {
@@ -111,9 +113,11 @@ namespace ProjMgrAPI.Tests.Controllers
             taskCtrl.Dispose();
 
             Assert.AreEqual("DefaultApi", createdResult.RouteName);
+
+            TestId = tsk.task_id;
         }
 
-        [TestCase]
+        [TestCase, Order(4)]
 
         public void AddTaskTestMethod()
         {
@@ -165,7 +169,7 @@ namespace ProjMgrAPI.Tests.Controllers
             Assert.AreEqual("DefaultApi", createdResult.RouteName);
         }
 
-        [TestCase]
+        [TestCase, Order(5)]
         public void EditTaskTestMethod()
         {
             //var taskCtrl = new TasksController();
@@ -209,15 +213,13 @@ namespace ProjMgrAPI.Tests.Controllers
         }
 
 
-        [TestCase]
+        [TestCase, Order(6)]
         public void GetTaskTestMethod()
         {
             var tskCtrl = new TasksController();
 
 
-            int taskid  = tskCtrl.Gettasks().ToList().
-                        Where(t => t.users == null || t.users.Count == 0).
-                         Max(t => t.task_id);
+            int taskid = TestId;
 
 
             IHttpActionResult actResult = tskCtrl.Gettask(taskid);
@@ -245,7 +247,7 @@ namespace ProjMgrAPI.Tests.Controllers
         }
 
 
-        [TestCase]
+        [TestCase, Order(7)]
         public void GetParentTasksTestMethod()
         {
             var taskCtrl = new PTasksController();
@@ -263,14 +265,12 @@ namespace ProjMgrAPI.Tests.Controllers
 
 
 
-        [TestCase]
+        [TestCase, Order(8)]
         public void DeleteTaskTestMethod()
         {
             var tskCtrl = new TasksController();
 
-            var tskid = tskCtrl.Gettasks().ToList().
-                         Where(t => t.users == null || t.users.Count == 0).
-                          Max(t => t.task_id);
+            var tskid = TestId;
          
 
            

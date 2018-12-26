@@ -12,10 +12,17 @@ using System.Net;
 
 namespace ProjMgrAPI.Tests.Controllers
 {
+
+   
+
     [TestFixture]
     public class UserControllerTest
     {
-        [TestCase]
+
+        private int TestId { get; set; }
+
+
+        [TestCase, Order(1)]
         public void AddUserTestMethod()
         {
             var userCtrl = new UsersController();
@@ -25,8 +32,8 @@ namespace ProjMgrAPI.Tests.Controllers
             {
                 last_name = "ramalingam",
                 first_name = "krishna",
-                emp_id = 251683
-
+                emp_id = 251683,
+               
             };
 
 
@@ -37,10 +44,12 @@ namespace ProjMgrAPI.Tests.Controllers
             userCtrl.Dispose();
 
             Assert.AreEqual("DefaultApi", createdResult.RouteName);
+
+            TestId = user.user_id;
         }
 
 
-        [TestCase]
+        [TestCase, Order(2)]
         public void AddUser2TestMethod()
         {
             var userCtrl = new UsersController();
@@ -64,15 +73,16 @@ namespace ProjMgrAPI.Tests.Controllers
             Assert.AreEqual("DefaultApi", createdResult.RouteName);
         }
 
-        [TestCase]
+
+        [TestCase, Order(3)]
         public void EditUserTestMethod()
         {
             var userCtrl = new UsersController();
 
 
             var usr = userCtrl.Getusers().ToList().
-                        Where(u => u.project == null || u.task == null).
-                         First();
+                       //Where(u => u.project == null || u.task == null).
+                         First(u=> u.user_id == TestId);
 
 
 
@@ -94,15 +104,15 @@ namespace ProjMgrAPI.Tests.Controllers
         }
 
 
-        [TestCase]
+        [TestCase, Order(4)]
         public void EditUserTestMethod2()
         {
             var userCtrl = new UsersController();
 
 
             var usr = userCtrl.Getusers().ToList().
-                        Where(u => u.project == null || u.task == null).
-                         First();
+                       // Where(u => u.project == null || u.task == null).
+                       First(u => u.user_id == TestId);
 
 
 
@@ -123,7 +133,8 @@ namespace ProjMgrAPI.Tests.Controllers
         }
 
 
-        [TestCase]
+
+        [TestCase, Order(5)]
         public void GetUserTestMethod()
         {
             var userCtrl = new UsersController();
@@ -144,7 +155,7 @@ namespace ProjMgrAPI.Tests.Controllers
         }
 
 
-        [TestCase]
+        [TestCase, Order(6)]
         public void GetUsersTestMethod()
         {
             var userCtrl = new UsersController();
@@ -161,7 +172,7 @@ namespace ProjMgrAPI.Tests.Controllers
         }
 
 
-        [TestCase]
+        [TestCase, Order(7)]
         public void GetUsers2TestMethod()
         {
             var userCtrl = new UsersController();
@@ -179,16 +190,14 @@ namespace ProjMgrAPI.Tests.Controllers
 
 
 
-        [TestCase]
+        [TestCase, Order(8)]
         public void DeleteUserTestMethod()
         {
             var usrCtrl = new UsersController();
 
 
 
-            var userid = usrCtrl.Getusers().ToList().
-                         Where(u => u.project == null || u.task == null).
-                          Max(u => u.user_id);
+            var userid = TestId;
 
             var actResult = usrCtrl.Deleteuser(userid);
 

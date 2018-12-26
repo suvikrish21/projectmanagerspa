@@ -101,8 +101,9 @@ namespace ProjMgrAPI.Controllers
             }
 
 
-            int usersequence =  db.users.Count() == 0 ? 1 :db.users.Max(t => t.user_id);
-            user.user_id = usersequence + 1;
+
+            //int usersequence =  db.users.Count() == 0 ? 1 :db.users.Max(t => t.user_id);
+            //user.user_id = usersequence + 1;
 
             db.users.Add(user);
             db.SaveChanges();
