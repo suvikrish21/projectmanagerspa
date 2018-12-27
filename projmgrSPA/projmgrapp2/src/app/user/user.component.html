@@ -65,7 +65,7 @@
 </div>
 <hr/>
 
-<div *ngIf="userList" class="container">
+<div *ngIf="userList" class="container" (window:scroll)="onScroll($event)" >
   
 
      <div>
@@ -77,7 +77,7 @@
  
      </div>
 
-     <div class="list-group" *ngFor="let usr of userList | userfilter:searchText | usersort : sortText | slice:0:50">
+     <div  class="list-group" *ngFor="let usr of userList | userfilter:searchText | usersort : sortText ">
         
         <div class="list-group-item">
 

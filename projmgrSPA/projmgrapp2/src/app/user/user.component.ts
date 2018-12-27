@@ -22,6 +22,19 @@ export class UserComponent implements OnInit {
     this.getUsers();
   }
 
+  onScroll(event){
+
+    //let height1 =  event.target.scrollTopMax;
+    //let position1 = event.target.scrollTop;
+
+    //if (height1 - position1 < 100) {
+     //   
+    //}
+    
+    //console.log(event);
+    
+  }
+
   ngOnInit() {
   }
 

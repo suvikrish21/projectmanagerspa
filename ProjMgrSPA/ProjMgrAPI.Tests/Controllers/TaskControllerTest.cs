@@ -124,7 +124,7 @@ namespace ProjMgrAPI.Tests.Controllers
             var taskCtrl = new TasksController();
 
             var userCtrl = new UsersController();
-            var userid = userCtrl.Getusers().ToList().
+            var userid = userCtrl.Getusers().
                       
                       Max(u => u.user_id);
 
@@ -182,14 +182,14 @@ namespace ProjMgrAPI.Tests.Controllers
 
 
             var projid = projCtrl.Getprojects().ToList().
-                          Where(p => p.users == null || p.users.Count == 0).
-                          Max(p => p.project_id);
+                          First(p => p.users == null || p.users.Count == 0);
+                         
 
-            var parentid = pTaskCtrl.Gettasks().ToList().
+            var parentid = pTaskCtrl.Gettasks().
 
                          Max(p => p.parent_id);
 
-            var tsk = tskCtrl.Gettasks().ToList().First();
+            var tsk = tskCtrl.Gettasks().First();
 
             tsk.task1 = "TASK ABC";
             tsk.start_dt = DateTime.Now;
@@ -198,7 +198,7 @@ namespace ProjMgrAPI.Tests.Controllers
             tsk.priority = 5;
             tsk.status = "HOLD";
 
-            tsk.project_id = projid;
+            tsk.project_id = projid.project_id;
             tsk.parent_id = parentid;
                
             
@@ -219,15 +219,15 @@ namespace ProjMgrAPI.Tests.Controllers
             var tskCtrl = new TasksController();
 
 
-            int taskid = TestId;
+            var tsk = tskCtrl.Gettasks().First();
 
 
-            IHttpActionResult actResult = tskCtrl.Gettask(taskid);
+            IHttpActionResult actResult = tskCtrl.Gettask(tsk.task_id);
             var createdResult = actResult as OkNegotiatedContentResult<task>;
 
             Debug.WriteLine(actResult);
 
-            Assert.AreEqual(taskid, createdResult.Content.task_id);
+            Assert.AreEqual(tsk.task_id, createdResult.Content.task_id);
         }
 
         [TestCase, Order(10)]
@@ -236,13 +236,15 @@ namespace ProjMgrAPI.Tests.Controllers
             var taskCtrl = new TasksController();
             var projCtrl = new ProjectsController();
 
+
             var projid = projCtrl.Getprojects().ToList().
-                         Where(p => p.users == null || p.users.Count == 0).
-                         Max(p => p.project_id);
+                       First(p => p.users == null || p.users.Count == 0);
+
+            
 
 
 
-            List<task> actResult = taskCtrl.Gettasks(projid).ToList();
+            List<task> actResult = taskCtrl.Gettasks(projid.project_id).ToList();
 
 
             Debug.WriteLine(actResult);

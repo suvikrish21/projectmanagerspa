@@ -17,3 +17,8 @@ input:required:valid + .validation {
 
     opacity: 1;
 }
+
+
+input[data-readonly] {
+  pointer-events: none;
+}

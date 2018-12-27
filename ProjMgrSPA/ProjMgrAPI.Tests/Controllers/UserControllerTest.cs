@@ -80,9 +80,9 @@ namespace ProjMgrAPI.Tests.Controllers
             var userCtrl = new UsersController();
 
 
-            var usr = userCtrl.Getusers().ToList().
+            var usr = userCtrl.Getusers().
                        //Where(u => u.project == null || u.task == null).
-                         First(u=> u.user_id == TestId);
+                         First();
 
 
 
@@ -140,7 +140,7 @@ namespace ProjMgrAPI.Tests.Controllers
             var userCtrl = new UsersController();
 
 
-            int  usrid = userCtrl.Getusers().ToList().
+            int  usrid = userCtrl.Getusers().
                         Where(u => u.project == null || u.task == null).
                          Max(u => u.user_id);
             
@@ -163,12 +163,12 @@ namespace ProjMgrAPI.Tests.Controllers
 
            
 
-            List<user> actResult = userCtrl.Getusers().ToList();
+            var actResult = userCtrl.Getusers();
 
 
             Debug.WriteLine(actResult);
 
-            Assert.AreEqual(actResult.Count , actResult.Count);
+            Assert.AreEqual(actResult.Count() , actResult.Count());
         }
 
 

@@ -83,7 +83,9 @@
             </div>
             <div class="col-md-6">
 
-                <input class="form-control" type="text" name="proj" readonly value="{{tsk.project?.project1 || ''}}" />
+                <input class="form-control" type="text" name="proj" required readonly value="{{tsk.project?.project1 || ''}}" />
+                <span  *ngIf="!tsk.project" class="validation">Project is Required</span>
+     
             </div>
             <div class="col-md-1">
                 <input class="btn btn-secondary" type="button" value="Search" (click)="modal1.show()" [disabled]="tsk.task_id" />

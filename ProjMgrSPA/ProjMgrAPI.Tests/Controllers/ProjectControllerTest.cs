@@ -111,9 +111,9 @@ namespace ProjMgrAPI.Tests.Controllers
             var projCtrl = new ProjectsController();
 
 
-            var proj = projCtrl.Getprojects().ToList().
+            var proj = projCtrl.Getprojects().
                           //Where(p => p.users == null || p.users.Count == 0).
-                          First(p=> p.project_id == TestId);
+                          First();
 
 
 
@@ -136,18 +136,21 @@ namespace ProjMgrAPI.Tests.Controllers
             var projCtrl = new ProjectsController();
 
 
-            int projid = TestId;
+
+            var projid = projCtrl.Getprojects().
+                          //Where(p => p.users == null || p.users.Count == 0).
+                          First();
 
 
 
 
 
-            IHttpActionResult actResult = projCtrl.Getproject(projid);
+            IHttpActionResult actResult = projCtrl.Getproject(projid.project_id);
             var createdResult = actResult as OkNegotiatedContentResult<project>;
 
             Debug.WriteLine(actResult);
 
-            Assert.AreEqual(projid, createdResult.Content.project_id);
+            Assert.AreEqual(projid.project_id, createdResult.Content.project_id);
         }
 
 

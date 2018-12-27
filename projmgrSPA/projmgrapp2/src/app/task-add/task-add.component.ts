@@ -156,6 +156,8 @@ export class TaskAddComponent implements OnInit {
     if (this.errorDt)
          return;
 
+    if (this.tsk.project == null) return;   
+
     var newtsk;
     var url;
 
