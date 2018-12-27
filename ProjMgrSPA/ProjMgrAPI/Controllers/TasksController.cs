@@ -37,7 +37,17 @@ namespace ProjMgrAPI.Controllers
             return Ok(task);
         }
 
-    
+
+        
+        public IQueryable<task> Gettasks(int projid)
+        {
+            var projTasks = db.tasks.Where(t => t.project_id == projid);
+          
+
+            return projTasks;
+        }
+
+
 
         // PUT: api/Tasks/5
         [ResponseType(typeof(void))]

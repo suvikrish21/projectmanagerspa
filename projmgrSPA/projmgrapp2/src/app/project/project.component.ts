@@ -21,6 +21,7 @@ export class ProjectComponent implements OnInit {
   public errorDt = false;
   public projSortText = "project1";
   public statusMessage : string;
+  public mgr;
 
   constructor(private projmgrservice: ProjmgrapiService, private datepipe: DatePipe) { }
 
@@ -46,14 +47,17 @@ export class ProjectComponent implements OnInit {
 
   }
 
-  setProjectDates(e: Event) {
 
-    var chkbox = e.target as HTMLInputElement;
+ 
+
+  setProjectDates() {
+
+    //var chkbox = e.target as HTMLInputElement;
     //console.log("set project dates " + chkbox.checked);
 
 
 
-    if (chkbox.checked) {
+    if (this.proj.is_duration) {
       var todayDt = Date.now();
       this.proj.start_dt = this.datepipe.transform(todayDt, "yyyy-MM-dd");
       this.proj.end_dt = this.datepipe.transform((todayDt + 86400 * 1000), "yyyy-MM-dd");

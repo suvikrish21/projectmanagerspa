@@ -14,12 +14,13 @@
         <ul class="list-group">
 
             <li class="list-group-item" *ngFor="let proj of projList | projfilter:projSrchText">
-                <input type="radio" name="projs" (click)="tsk.project  = proj" /> {{proj.project1}}
+                <input type="radio" name="rdoprojs" [(ngModel)] ="projtsk" [value]="proj" [checked]="projtsk == proj" /> {{proj.project1}}
             </li>
         </ul>
     </div>
     <div class="app-modal-footer">
-        <button type="button" class="btn btn-default" (click)="modal1.hide()">Close</button>
+        <button type="button" class="btn btn-default" (click)="tsk.project = projtsk;modal1.hide();">Select Project</button>       
+        <button type="button" class="btn btn-default" (click)="tsk.project = null;projtsk = null;modal1.hide();">Cancel Project</button>
     </div>
 </app-modal>
 
@@ -36,12 +37,13 @@
         <ul class="list-group">
 
             <li class="list-group-item" *ngFor="let ptask of parentTaskList | ptaskfilter:pTaskSrchText">
-                <input type="radio" name="ptasks" (click)="tsk.parent_task  = ptask" /> {{ptask.parent_task1}}
+                <input type="radio" name="rdoptasks" [(ngModel)]="parenttsk" [value]="ptask" [checked]="parenttsk  == ptask" /> {{ptask.parent_task1}}
             </li>
         </ul>
     </div>
     <div class="app-modal-footer">
-        <button type="button" class="btn btn-default" (click)="modal2.hide()">Close</button>
+        <button type="button" class="btn btn-default" (click)="tsk.parent_task = parenttsk;modal2.hide();">Select Parent Task</button>        
+        <button type="button" class="btn btn-default" (click)="tsk.parent_task = null; parenttsk = null;modal2.hide();">Cancel Parent Task</button>
     </div>
 </app-modal>
 
@@ -59,12 +61,13 @@
         <ul class="list-group">
 
             <li class="list-group-item" *ngFor="let usr of usrList | userfilter:usrSrchText">
-                <input type="radio" name="usrs" (click)="tsk.owner  = usr" /> {{usr.first_name}} {{usr.last_name}}
+                <input type="radio" name="rdousrs"   [(ngModel)]="owr" [value]="usr"  [checked]="owr == usr" /> {{usr.first_name}} {{usr.last_name}}
             </li>
         </ul>
     </div>
     <div class="app-modal-footer">
-        <button type="button" class="btn btn-default" (click)="modal.hide()">Close</button>
+            <button type="button" class="btn btn-default" (click)="tsk.owner = owr;modal.hide();">Select User</button> 
+            <button type="button" class="btn btn-default" (click)="tsk.owner = null; owr = null;modal.hide();">Clear User</button>
     </div>
 </app-modal>
 

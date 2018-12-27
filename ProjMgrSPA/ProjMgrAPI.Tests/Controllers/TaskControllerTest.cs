@@ -230,8 +230,29 @@ namespace ProjMgrAPI.Tests.Controllers
             Assert.AreEqual(taskid, createdResult.Content.task_id);
         }
 
-        [TestCase]
+        [TestCase, Order(10)]
         public void GetTasksTestMethod()
+        {
+            var taskCtrl = new TasksController();
+            var projCtrl = new ProjectsController();
+
+            var projid = projCtrl.Getprojects().ToList().
+                         Where(p => p.users == null || p.users.Count == 0).
+                         Max(p => p.project_id);
+
+
+
+            List<task> actResult = taskCtrl.Gettasks(projid).ToList();
+
+
+            Debug.WriteLine(actResult);
+
+            Assert.AreEqual(actResult.Count, actResult.Count);
+        }
+
+
+        [TestCase, Order(9)]
+        public void GetTasksTestMethod2()
         {
             var taskCtrl = new TasksController();
 

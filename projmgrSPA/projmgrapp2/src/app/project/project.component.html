@@ -15,12 +15,13 @@
         <ul class="list-group">
 
             <li class="list-group-item" *ngFor="let usr of usrList | userfilter:usrSrchText">
-                <input type="radio" name="usrs" (click)="proj.manager  = usr" /> {{usr.first_name}} {{usr.last_name}}
+                <input type="radio"  name="rdusrs" [(ngModel)] ="mgr" [value]="usr" [checked]="mgr == usr" /> {{usr.first_name}} {{usr.last_name}}
             </li>
         </ul>
     </div>
     <div class="app-modal-footer">
-        <button type="button" class="btn btn-default" (click)="modal.hide()">Close</button>
+        <button type="button" class="btn btn-default" (click)="proj.manager = mgr;modal.hide();">Select User</button>   
+        <button type="button" class="btn btn-default" (click)="proj.manager = null;mgr = null;modal.hide();">Clear User</button>
     </div>
 </app-modal>
 
@@ -52,7 +53,7 @@
             </div>
             <div class="col-md-3">
 
-                <input type="checkbox" (change)="setProjectDates($event)" [(ngModel)]="proj.is_duration" name="setdate" />
+                <input type="checkbox" (change)="setProjectDates()" [(ngModel)]="proj.is_duration" name="setdate" />
                 <small>Set Start and End Date</small>
 
 

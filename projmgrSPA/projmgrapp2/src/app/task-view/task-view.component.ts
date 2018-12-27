@@ -13,13 +13,14 @@ import { AppSettings } from '../app_settings';
 })
 export class TaskViewComponent implements OnInit {
 
-  public tskList;
+ 
   public tskSortText = "task1";
   public tskvw = new TaskData();
   public projList;
   public projTskList;
   public statusMessage : string;
   public projSrchText;
+  public projtask;
 
   constructor(private projmgrservice: ProjmgrapiService,
     private router: Router,
@@ -28,7 +29,7 @@ export class TaskViewComponent implements OnInit {
 
   ngOnInit() {
 
-    this.getTasks();
+ 
     this.getProjects();
   }
 
@@ -67,7 +68,7 @@ export class TaskViewComponent implements OnInit {
 
         this.statusMessage = "Task Completed";
   
-        this.getTasks();
+        this.getTasks(this.tskvw.project.project_id);
       }
     )
 
@@ -82,23 +83,23 @@ export class TaskViewComponent implements OnInit {
 
   getProjectTask(project: any) {
 
+    this.getTasks(project.project_id);
+
     this.tskvw.project = project;
 
-    this.projTskList = this.tskList.
-      filter((tsk1: any) => tsk1.project !== null && tsk1.project.project_id === project.project_id);
-
+    
 
   }
 
-  getTasks() {
+  getTasks(projectId : number) {
 
-    const url = AppSettings.ProjectAPIEndPoint + "/tasks/";
+    const url = AppSettings.ProjectAPIEndPoint + "/tasks/?projid=" + projectId;
 
 
     this.projmgrservice.get(url).subscribe(
       res => {
         //console.log(res);
-        this.tskList = res;
+        this.projTskList = res;
       }
     )
   }

@@ -25,6 +25,10 @@ export class TaskAddComponent implements OnInit {
   public usrSrchText;
   public projSrchText;
   public pTaskSrchText;
+  public owr;
+  public parenttsk;
+  public projtsk;
+
 
   constructor(private projmgrservice: ProjmgrapiService,
     private datepipe: DatePipe,

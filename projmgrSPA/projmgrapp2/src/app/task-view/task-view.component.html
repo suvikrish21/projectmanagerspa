@@ -14,12 +14,13 @@
                 <ul class="list-group">
 
                         <li class="list-group-item" *ngFor="let proj of projList | projfilter:projSrchText">
-                                <input type="radio" name="projs" (click)="getProjectTask(proj)" /> {{proj.project1}}
+                                <input type="radio" name="rdprojs" [(ngModel)] ="projtask" [value]="proj" [checked]="projtask == proj" /> {{proj.project1}}
                         </li>
                 </ul>
         </div>
         <div class="app-modal-footer">
-                <button type="button" class="btn btn-default" (click)="modal1.hide()">Close</button>
+                <button type="button" class="btn btn-default" (click)="getProjectTask(projtask);modal1.hide();">Select Project</button>
+                <button type="button" class="btn btn-default" (click)="projtask = tskvw.project; modal1.hide();">Close</button>
         </div>
 </app-modal>
 
