@@ -9,8 +9,11 @@
     <div class="app-modal-body">
 
 
-        <input type="Search" placeholder="Search Users" [(ngModel)]="usrSrchText" />
+        <div *ngIf="!usrList" class="panel panel-info" >
+            <div class="panel-heading"> Loading .... </div>
+        </div>
 
+        <input type="Search" placeholder="Search Users" [(ngModel)]="usrSrchText" />
 
         <ul class="list-group">
 
@@ -91,7 +94,7 @@
             <div class="col-md-6">
 
                 <input class="form-control" type="range" name="priority" step="1" min="0" max="30" [(ngModel)]="proj.priority" />
-
+                <label>0-30</label>
             </div>
         </div>
 

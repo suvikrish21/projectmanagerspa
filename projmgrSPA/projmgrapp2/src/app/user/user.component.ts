@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProjmgrapiService } from '../projmgrapi.service';
 import { UserData } from '../usrdatamodel';
 import { AppSettings } from '../app_settings';
-
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-user',
@@ -18,7 +18,7 @@ export class UserComponent implements OnInit {
   public sortText = "first_name";
   public statusMessage : string;
 
-  constructor(private projmgrservice: ProjmgrapiService) {
+  constructor(private projmgrservice: ProjmgrapiService,  private datepipe: DatePipe) {
     this.getUsers();
   }
 
@@ -59,7 +59,7 @@ export class UserComponent implements OnInit {
     this.projmgrservice.delete(url, userid).subscribe(
       res => {
         //console.log(res);
-        this.statusMessage = " User Deleted";
+        this.statusMessage = " User Deleted at " + this.datepipe.transform(Date.now(), "dd-MMM-yyyy h:mm:ss a");
           
 
         this.getUsers();
@@ -113,7 +113,7 @@ export class UserComponent implements OnInit {
           res => {
             //console.log(res);
 
-            this.statusMessage = " User Added";
+            this.statusMessage = " User Added at " + this.datepipe.transform(Date.now(), "dd-MMM-yyyy h:mm:ss a");
             
 
             this.getUsers();
@@ -137,7 +137,7 @@ export class UserComponent implements OnInit {
         this.projmgrservice.put(url, editUser.user_id, editUser).subscribe(
           res => {
             //console.log(res);
-            this.statusMessage = " User Updated";
+            this.statusMessage = " User Updated at " + this.datepipe.transform(Date.now(), "dd-MMM-yyyy h:mm:ss a");
           
 
             this.getUsers();
@@ -154,7 +154,7 @@ export class UserComponent implements OnInit {
 
   getUsers() {
 
-    const url = AppSettings.ProjectAPIEndPoint + "/users/summary/";
+    const url = AppSettings.ProjectAPIEndPoint + "/users/";
 
 
     this.projmgrservice.get(url).subscribe(

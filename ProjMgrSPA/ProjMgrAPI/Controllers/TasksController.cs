@@ -28,7 +28,10 @@ namespace ProjMgrAPI.Controllers
         [ResponseType(typeof(task))]
         public IHttpActionResult Gettask(int id)
         {
-            task task = db.tasks.Find(id);
+            task task = db.tasks.Include("users").
+                Include("project").
+                Include("parent_task").
+                First(t => t.task_id == id);
             if (task == null)
             {
                 return NotFound();
@@ -38,11 +41,15 @@ namespace ProjMgrAPI.Controllers
         }
 
 
-        
+
         public IQueryable<task> Gettasks(int projid)
         {
-            var projTasks = db.tasks.Where(t => t.project_id == projid);
-          
+            var projTasks = db.tasks.
+                //Include("users").
+                //Include("project").
+                Include("parent_task").
+                Where(t => t.project_id == projid);
+
 
             return projTasks;
         }
@@ -61,7 +68,7 @@ namespace ProjMgrAPI.Controllers
             if (id != task.task_id)
             {
                 return BadRequest();
-            } 
+            }
             // 
 
             MapTaskUser(task);
@@ -76,11 +83,11 @@ namespace ProjMgrAPI.Controllers
             {
                 //if (!taskExists(id))
                 //{
-                    return NotFound();
+                return NotFound();
                 //}
                 //else
                 //{
-                    throw;
+                throw;
                 //}
             }
 
@@ -151,4 +158,22 @@ namespace ProjMgrAPI.Controllers
         //    return db.tasks.Count(e => e.task_id == id) > 0;
         //}
     }
+
+    //public class taskvw
+    //{
+
+    //    public int task_id { get; set; }
+    //    public Nullable<int> parent_id { get; set; }
+    //    public Nullable<int> project_id { get; set; }
+    //    public string task1 { get; set; }
+    //    public Nullable<System.DateTime> start_dt { get; set; }
+    //    public Nullable<System.DateTime> end_dt { get; set; }
+    //    public Nullable<int> priority { get; set; }
+    //    public string status { get; set; }
+
+    //    public virtual parent_task parent_task { get; set; }
+    //    public virtual project project { get; set; }
+     
+
+    //}
 }

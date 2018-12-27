@@ -1,8 +1,4 @@
-input:required:invalid {
-    background-position:top;
-    background-repeat:no-repeat;
-    border:2px solid lightcoral;
-}
+
 
 input:required:valid + .validation {
 
@@ -16,9 +12,7 @@ input:required:valid + .validation {
  .validation {
 
     opacity: 1;
+    color: red;
 }
 
 
-input[data-readonly] {
-  pointer-events: none;
-}

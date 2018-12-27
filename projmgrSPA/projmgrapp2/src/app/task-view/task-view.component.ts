@@ -46,7 +46,7 @@ export class TaskViewComponent implements OnInit {
   getProjects() {
 
 
-    const url = AppSettings.ProjectAPIEndPoint + "/projects/summary/";
+    const url = AppSettings.ProjectAPIEndPoint + "/projects/";
 
     this.projmgrservice.get(url).subscribe(
       res => {
@@ -66,7 +66,7 @@ export class TaskViewComponent implements OnInit {
       res => {
         //console.log(res);
 
-        this.statusMessage = "Task Completed";
+        this.statusMessage = "Task Completed at "+ this.datepipe.transform(Date.now(), "dd-MMM-yyyy h:mm:ss a");
   
         this.getTasks(this.tskvw.project.project_id);
       }

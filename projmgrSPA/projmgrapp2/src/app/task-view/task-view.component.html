@@ -8,13 +8,17 @@
         </div>
         <div class="app-modal-body">
 
+                <div *ngIf="!projList" class="panel panel-info">
+                        <div class="panel-heading"> Loading .... </div>
+                </div>
+
                 <input type="Search" placeholder="Search Projects" [(ngModel)]="projSrchText" />
 
 
                 <ul class="list-group">
 
                         <li class="list-group-item" *ngFor="let proj of projList | projfilter:projSrchText">
-                                <input type="radio" name="rdprojs" [(ngModel)] ="projtask" [value]="proj" [checked]="projtask == proj" /> {{proj.project1}}
+                                <input type="radio" name="rdprojs" [(ngModel)]="projtask" [value]="proj" [checked]="projtask == proj" /> {{proj.project1}}
                         </li>
                 </ul>
         </div>

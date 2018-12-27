@@ -112,7 +112,7 @@ export class TaskAddComponent implements OnInit {
   getProjects() {
 
 
-    const url = AppSettings.ProjectAPIEndPoint + "/projects/summary/";
+    const url = AppSettings.ProjectAPIEndPoint + "/projects/";
 
     this.projmgrservice.get(url).subscribe(
       res => {
@@ -137,7 +137,7 @@ export class TaskAddComponent implements OnInit {
 
   getUsers() {
 
-    const url = AppSettings.ProjectAPIEndPoint + "/users/summary/";
+    const url = AppSettings.ProjectAPIEndPoint + "/users/";
 
 
     this.projmgrservice.get(url).subscribe(
@@ -153,10 +153,10 @@ export class TaskAddComponent implements OnInit {
     if (!isValid)
       return;
 
-    if (this.errorDt)
-         return;
-
-    if (this.tsk.project == null) return;   
+    if (!this.tsk.is_parent_task) {
+     if(this.errorDt || this.tsk.project == null) 
+     return;  
+    } 
 
     var newtsk;
     var url;
@@ -182,7 +182,7 @@ export class TaskAddComponent implements OnInit {
         res => {
           //console.log(res);
           
-          this.statusMessage ="Task Updated";
+          this.statusMessage ="Task Updated at " + this.datepipe.transform(Date.now(), "dd-MMM-yyyy h:mm:ss a");
 
           this.getProjects();
         }
@@ -224,7 +224,7 @@ export class TaskAddComponent implements OnInit {
       this.projmgrservice.post(url, newtsk).subscribe(
         res => {
           //console.log(res);
-          this.statusMessage ="Task Added";
+          this.statusMessage ="Task Added at " +  this.datepipe.transform(Date.now(), "dd-MMM-yyyy h:mm:ss a");
 
           this.getParentTasks();
 

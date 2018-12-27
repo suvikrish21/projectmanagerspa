@@ -47,7 +47,9 @@ namespace ProjMgrAPI.Controllers
         [ResponseType(typeof(project))]
         public IHttpActionResult Getproject(int id)
         {
-            project project = db.projects.Find(id);
+            var project = db.projects.Include("users")
+                    .First(p => p.project_id == id);
+            
             if (project == null)
             {
                 return NotFound();

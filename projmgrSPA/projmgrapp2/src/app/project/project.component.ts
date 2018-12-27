@@ -72,7 +72,7 @@ export class ProjectComponent implements OnInit {
 
   getUsers() {
 
-    const url = AppSettings.ProjectAPIEndPoint + "/users/summary/";
+    const url = AppSettings.ProjectAPIEndPoint + "/users/";
 
     this.projmgrservice.get(url).subscribe(
       res => {
@@ -150,7 +150,7 @@ export class ProjectComponent implements OnInit {
         this.projmgrservice.post(url, newProj).subscribe(
           res => {
             //console.log(res);
-            this.statusMessage = "Project Added";
+            this.statusMessage = "Project Added at " + this.datepipe.transform(Date.now(), "dd-MMM-yyyy h:mm:ss a");
 
             this.getProjects();
           } ,
@@ -185,7 +185,7 @@ export class ProjectComponent implements OnInit {
           res => {
             //console.log(res);
 
-            this.statusMessage = "Project Updated";
+            this.statusMessage = "Project Updated at " + this.datepipe.transform(Date.now(), "dd-MMM-yyyy h:mm:ss a");;
             this.getProjects();
           }
         );
