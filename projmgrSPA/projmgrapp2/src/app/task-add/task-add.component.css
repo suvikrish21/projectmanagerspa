@@ -1,0 +1,18 @@
+
+
+input:required:valid + .validation {
+
+    background-position:top;
+    background-repeat:no-repeat;
+    border:2px solid greenyellow;
+    opacity: 0;
+}
+
+
+ .validation {
+
+    opacity: 1;
+    color: red;
+}
+
+

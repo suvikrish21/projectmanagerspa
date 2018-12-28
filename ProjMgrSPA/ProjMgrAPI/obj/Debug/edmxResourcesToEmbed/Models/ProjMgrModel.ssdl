@@ -34,12 +34,12 @@
     <Key>
       <PropertyRef Name="user_id" />
     </Key>
-    <Property Name="user_id" Type="int" Nullable="false" />
     <Property Name="first_name" Type="varchar" MaxLength="100" />
     <Property Name="last_name" Type="varchar" MaxLength="100" />
     <Property Name="emp_id" Type="int" />
     <Property Name="project_id" Type="int" />
     <Property Name="task_id" Type="int" />
+    <Property Name="user_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
   </EntityType>
   <Association Name="fk_task_parentid">
     <End Role="parent_task" Type="Self.parent_task" Multiplicity="0..1" />

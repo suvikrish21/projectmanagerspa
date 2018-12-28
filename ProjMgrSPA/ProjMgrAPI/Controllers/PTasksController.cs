@@ -15,7 +15,10 @@ namespace ProjMgrAPI.Controllers
     {
         private ProjectManagerSPAEntities db = new ProjectManagerSPAEntities();
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public IQueryable<parent_task> Gettasks()
         {
             return db.parent_task;

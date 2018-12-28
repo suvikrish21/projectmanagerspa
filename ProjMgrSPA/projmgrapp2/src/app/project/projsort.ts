@@ -11,8 +11,8 @@ export class ProjSortPipe implements PipeTransform {
     
 
     transform(projs : any[], sortValue : any ) : any {
-        console.log(projs);
-        console.log(sortValue);
+        //console.log(projs);
+        //console.log(sortValue);
         if (!projs || !sortValue)
           return projs;
 

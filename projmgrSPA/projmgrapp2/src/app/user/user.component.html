@@ -1,5 +1,7 @@
 
-
+<div *ngIf="statusMessage" class="panel panel-info">
+   <div class="panel-body">{{statusMessage}}</div>
+</div>
 
 <div class="container">
 
@@ -63,19 +65,19 @@
 </div>
 <hr/>
 
-<div *ngIf="userList" class="container">
+<div *ngIf="userList" class="container" (window:scroll)="onScroll($event)" >
   
 
      <div>
          <input type="Search" placeholder="Search Users" [(ngModel)]="searchText" />
          Sort By:
-         <input type="button" class="btn" value="First Name" (click)="sortUserBy('first_name')" />
-         <input type="button" class="btn" value="Last Name" (click)="sortUserBy('last_name')" />
-         <input type="button" class="btn" value="Id" (click)="sortUserBy('emp_id')" />
+         <input type="button" class="{{sortText=='first_name' ? 'btn btn-primary' : 'btn'}}" value="First Name" (click)="sortUserBy('first_name')" />
+         <input type="button" class="{{sortText=='last_name' ? 'btn btn-primary' : 'btn'}}" value="Last Name" (click)="sortUserBy('last_name')" />
+         <input type="button" class="{{sortText=='emp_id' ? 'btn btn-primary' : 'btn'}}" value="Id" (click)="sortUserBy('emp_id')" />
  
      </div>
 
-     <div class="list-group" *ngFor="let usr of userList | userfilter:searchText | usersort : sortText">
+     <div  class="list-group" *ngFor="let usr of userList | userfilter:searchText | usersort : sortText ">
         
         <div class="list-group-item">
 

@@ -1,195 +1,230 @@
-
+<div *ngIf="statusMessage" class="panel panel-info">
+    <div class="panel-body">{{statusMessage}}</div>
+</div>
 
 <app-modal #modal1>
     <div class="app-modal-header">
-      Project List
+        Project List
     </div>
     <div class="app-modal-body">
-     
-   <input type="Search" placeholder="Search Projects" [(ngModel)]="projSrchText" />
-  
 
-      <ul class="list-group">
-  
-      <li class="list-group-item" *ngFor="let proj of projList | projfilter:projSrchText">
-          <input type="radio" name="projs" (click)="tsk.project  = proj" /> {{proj.project1}} 
-      </li>
-          </ul>
+        <div *ngIf="!projList" class="panel panel-info">
+            <div class="panel-heading"> Loading .... </div>
+        </div>
+
+        <input type="Search" placeholder="Search Projects" [(ngModel)]="projSrchText" />
+
+
+        <ul class="list-group">
+
+            <li class="list-group-item" *ngFor="let proj of projList | projfilter:projSrchText">
+                <input type="radio" name="rdoprojs" [(ngModel)]="projtsk" [value]="proj" [checked]="projtsk == proj" /> {{proj.project1}}
+            </li>
+        </ul>
     </div>
     <div class="app-modal-footer">
-      <button type="button" class="btn btn-default" (click)="modal1.hide()">Close</button>
-     </div>
-  </app-modal>
+        <button type="button" class="btn btn-default" (click)="tsk.project = projtsk;modal1.hide();">Select Project</button>
+        <button type="button" class="btn btn-default" (click)="tsk.project = null;projtsk = null;modal1.hide();">Cancel Project</button>
+    </div>
+</app-modal>
 
 
 <app-modal #modal2>
     <div class="app-modal-header">
-      Parent Task List
+        Parent Task List
     </div>
     <div class="app-modal-body">
-      <ul class="list-group">
-  
-      <li class="list-group-item" *ngFor="let ptask of parentTaskList">
-          <input type="radio" name="ptasks" (click)="tsk.parent_task  = ptask"/> {{ptask.parent_task1}} 
-      </li>
-          </ul>
+
+        <div *ngIf="!parentTaskList" class="panel panel-info">
+            <div class="panel-heading"> Loading .... </div>
+        </div>
+
+        <input type="Search" placeholder="Search Parent Tasks" [(ngModel)]="pTaskSrchText" />
+
+
+        <ul class="list-group">
+
+            <li class="list-group-item" *ngFor="let ptask of parentTaskList | ptaskfilter:pTaskSrchText">
+                <input type="radio" name="rdoptasks" [(ngModel)]="parenttsk" [value]="ptask" [checked]="parenttsk  == ptask" /> {{ptask.parent_task1}}
+            </li>
+        </ul>
     </div>
     <div class="app-modal-footer">
-      <button type="button" class="btn btn-default" (click)="modal2.hide()">Close</button>
+        <button type="button" class="btn btn-default" (click)="tsk.parent_task = parenttsk;modal2.hide();">Select Parent Task</button>
+        <button type="button" class="btn btn-default" (click)="tsk.parent_task = null; parenttsk = null;modal2.hide();">Cancel Parent Task</button>
     </div>
-  </app-modal>
+</app-modal>
 
 
 
 <app-modal #modal>
     <div class="app-modal-header">
-      User List
+        User List
     </div>
     <div class="app-modal-body">
-  
-       <input type="Search" placeholder="Search Users" [(ngModel)]="usrSrchText" />
-  
 
-      <ul class="list-group">
-  
-      <li class="list-group-item" *ngFor="let usr of usrList | userfilter:usrSrchText">
-          <input type="radio" name="usrs" (click)="tsk.owner  = usr" /> {{usr.first_name}}  {{usr.last_name}}
-      </li>
-          </ul>
+
+        <div *ngIf="!usrList" class="panel panel-info">
+            <div class="panel-heading"> Loading .... </div>
+        </div>
+
+        <input type="Search" placeholder="Search Users" [(ngModel)]="usrSrchText" />
+
+
+        <ul class="list-group">
+
+            <li class="list-group-item" *ngFor="let usr of usrList | userfilter:usrSrchText">
+                <input type="radio" name="rdousrs" [(ngModel)]="owr" [value]="usr" [checked]="owr == usr" /> {{usr.first_name}} {{usr.last_name}}
+            </li>
+        </ul>
     </div>
     <div class="app-modal-footer">
-      <button type="button" class="btn btn-default" (click)="modal.hide()">Close</button>
+        <button type="button" class="btn btn-default" (click)="tsk.owner = owr;modal.hide();">Select User</button>
+        <button type="button" class="btn btn-default" (click)="tsk.owner = null; owr = null;modal.hide();">Clear User</button>
     </div>
-  </app-modal>
+</app-modal>
 
 
 
 <div class="container">
 
-  
-  <div class="row">
-    <div class="col-md-1">
-        <label for="proj">Project:  </label>
-    </div>
-    <div class="col-md-6">
-      
-       <input class="form-control" type="text" name="proj"  readonly  value="{{tsk.project == null ? '' : tsk.project.project1}}" />
-    </div>
-    <div class="col-md-1">
-       <input class="btn btn-secondary" type="button" value="Search"  (click)="modal1.show()" />
-    </div>
-  </div>
-  <br/>
-  <div class="row">
-  <div class="col-md-1">
-      <label for="task1">Task:  </label>
-  </div>
+    <form #taskForm="ngForm" (submit)="addTask(taskForm.valid)">
 
-    <div class="col-md-7">
-      
-       <input class="form-control" required type="text" required name="task1" [(ngModel)]="tsk.task_name" />
+        <div class="row">
+            <div class="col-md-1">
+                <label for="proj">Project: </label>
+            </div>
+            <div class="col-md-6">
 
-    </div>
-  </div>
-  <br/>
+                <input class="form-control" type="text" name="proj" required readonly value="{{tsk.project?.project1 || ''}}" />
+                <span *ngIf="!tsk.project && !tsk.is_parent_task" class="validation">Project is Required</span>
 
-  <div class="row">
-      <div class="col-md-1">
-          
-      </div>
-      <div class="col-md-3">
-          
-          <input type="checkbox" name="parentTask" [(ngModel)]="tsk.is_parent_task" /> 
-          Parent Task
-      </div>
-      </div>
-      <div class="row">
-          <div class="col-md-4">
-
-          </div>
-     
-         
-    </div>
-
-   <br/>
-
-    <div class="row">
-        <div class="col-md-1">
-            <label for="priority">Priority:  </label>
+            </div>
+            <div class="col-md-1">
+                <input class="btn btn-secondary" type="button" value="Search" (click)="modal1.show()" [disabled]="tsk.task_id" />
+            </div>
         </div>
-        <div class="col-md-7">
-          
-           <input class="form-control" type="range" name="priority"   step="1" min ="0" max="30" [(ngModel)]="tsk.priority" />
-           
-        </div>
-      </div>
-   
-      <br/>
-      
+        <br/>
+        <div class="row">
+            <div class="col-md-1">
+                <label for="task1">Task: </label>
+            </div>
 
-      <div class="row">
-          <div class="col-md-1">
-              <label for="ptask">Parent Task:  </label>
-          </div>
-          <div class="col-md-6">
-            
-             <input class="form-control" type="text" name="ptask"  readonly  value="{{tsk.parent_task == null ? '' : tsk.parent_task.parent_task1}}" />
-          </div>
-          <div class="col-md-1">
-             <input class="btn btn-secondary" type="button" value="Search" (click)="modal2.show()"  />
-          </div>
+            <div class="col-md-7">
+
+                <input class="form-control" required type="text" required name="task1" [(ngModel)]="tsk.task_name" />
+                <span class="validation">Task name is Required</span>
+            </div>
+        </div>
+        <br/>
+
+        <div class="row">
+            <div class="col-md-1">
+
+            </div>
+            <div class="col-md-3">
+
+                <input type="checkbox" [disabled]="tsk.task_id" name="parentTask" [(ngModel)]="tsk.is_parent_task" /> Parent Task
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+
+            </div>
+
+
         </div>
 
         <br/>
-       
-      <div class="row">
-          <div class="col-md-1">
-            <label for="startdt">Start Date:</label>
-         </div>
-         <div class="col-md-3">
 
-          <input class="form-control input-sm" type="date" name="startdt" [(ngModel)]="tsk.start_dt" placeholder="Start Date" />
-          </div>
-          <div class="col-md-1">
-              <label for="endt">End Date:</label>
+        <div class="row">
+            <div class="col-md-1">
+                <label for="priority">Priority: </label>
             </div>
-            <div class="col-md-3">
-          <input class="form-control input-sm" type="date" name="enddt" [(ngModel)]="tsk.end_dt" placeholder="End Date" />
- 
-       </div>
-      </div>
-  
+            <div class="col-md-7">
 
-       <br/>
-
-      <div class="row">
-              <div class="col-md-1">
-                  <label for="mgrid">User:  </label>
-              </div>
-              <div class="col-md-6">
-                
-                 <input class="form-control" type="text" name="ownerid" readonly value="{{tsk.owner == null ? '' : tsk.owner.first_name + ' ' + tsk.owner.last_name}}" />
-              </div>
-              <div class="col-md-1">
-                 <input class="btn btn-secondary" type="button" value="Search" (click)="modal.show()" />
-              </div>
-            </div>
-
-      <br/>
-
-      <div class="row">
-          <div class="col-md-4">
-         </div>
-          <div class="col-md-1">
-              <input class="btn" type="submit" (click)="addTask()" [(ngModel)]="action"  />
-          </div>
-              <div class="col-md-1">
-             <input class="btn" type="button" value="Reset" />
-      
-          </div>
-          <div class="col-md-2">
+                <input class="form-control" type="range" name="priority" step="1" min="0" max="30" [(ngModel)]="tsk.priority" [disabled]="tsk.is_parent_task"
+                />
+                <label>0-30</label>
             </div>
         </div>
 
+        <br/>
+
+
+        <div class="row">
+            <div class="col-md-1">
+                <label for="ptask">Parent Task: </label>
+            </div>
+            <div class="col-md-6">
+
+                <input class="form-control" type="text" name="ptask" readonly value="{{tsk.parent_task?.parent_task1 || ''}}" />
+            </div>
+            <div class="col-md-1">
+                <input class="btn btn-secondary" type="button" value="Search" (click)="modal2.show()" [disabled]="tsk.is_parent_task" />
+            </div>
+        </div>
+
+        <br/>
+
+        <div class="row">
+            <div class="col-md-1">
+                <label for="startdt">Start Date:</label>
+            </div>
+            <div class="col-md-3">
+
+                <input class="form-control input-sm" type="date" name="startdt" [(ngModel)]="tsk.start_dt" placeholder="Start Date" [disabled]="tsk.is_parent_task"
+                />
+            </div>
+            <div class="col-md-1">
+                <label for="endt">End Date:</label>
+            </div>
+            <div class="col-md-3">
+                <input class="form-control input-sm" type="date" name="enddt" [(ngModel)]="tsk.end_dt" placeholder="End Date" (blur)="compareDates()"
+                    [disabled]="tsk.is_parent_task" />
+
+            </div>
+        </div>
+        <div class="row" *ngIf="errorDt">
+            <div class="col-md-1">
+            </div>
+            <div class="col-md-7">
+                <span class="validation">End date should be greater than start date</span>
+            </div>
+        </div>
+
+
+        <br/>
+
+        <div class="row">
+            <div class="col-md-1">
+                <label for="mgrid">User: </label>
+            </div>
+            <div class="col-md-6">
+
+                <input class="form-control" type="text" name="ownerid" readonly value="{{tsk.owner == null ? '' : tsk.owner.first_name + ' ' + tsk.owner.last_name}}"
+                />
+            </div>
+            <div class="col-md-1">
+                <input class="btn btn-secondary" type="button" value="Search" (click)="modal.show()" [disabled]="tsk.is_parent_task" />
+            </div>
+        </div>
+
+        <br/>
+
+        <div class="row">
+            <div class="col-md-4">
+            </div>
+            <div class="col-md-1">
+                <button class="btn" type="submit">{{action}}</button>
+            </div>
+            <div class="col-md-1">
+                <button class="btn" type="button" (click)="resetTask()"> Reset </button>
+
+            </div>
+            <div class="col-md-2">
+            </div>
+        </div>
+    </form>
 </div>
 <hr/>

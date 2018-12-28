@@ -18,6 +18,7 @@ import { UserFilterPipe } from './user/userfilter';
 import { UserSortPipe } from './user/usersort';
 import { ProjFilterPipe } from './project/projfilter';
 import { ProjSortPipe } from './project/projsort';
+import { ParentTaskFilterPipe } from './task-add/ptaskfilter';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { ProjSortPipe } from './project/projsort';
     UserFilterPipe,
     UserSortPipe,
     ProjFilterPipe,
-    ProjSortPipe
+    ProjSortPipe,
+    ParentTaskFilterPipe
   ],
   imports: [
     BrowserModule,

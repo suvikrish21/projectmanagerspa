@@ -18,6 +18,7 @@ namespace ProjMgrAPI.Models
         public ProjectManagerSPAEntities()
             : base("name=ProjectManagerSPAEntities")
         {
+            this.Configuration.LazyLoadingEnabled = false;
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

@@ -7,8 +7,8 @@ import{ Pipe, PipeTransform } from '@angular/core';
 
 export class UserSortPipe implements PipeTransform {
     transform(users : any[], sortValue : any ) : any {
-        console.log(users);
-        console.log(sortValue);
+        //console.log(users);
+        //console.log(sortValue);
         if (!users || !sortValue)
           return users;
 

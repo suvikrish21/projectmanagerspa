@@ -9,5 +9,5 @@ export class ProjectData {
   end_dt : any;
   priority : number = 0;
   manager : any;
-
+  is_duration : boolean
 }
