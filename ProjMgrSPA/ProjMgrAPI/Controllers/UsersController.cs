@@ -28,6 +28,8 @@ namespace ProjMgrAPI.Controllers
         [Route("api/users/summary")]
         public IQueryable<uservw> Getusers2()
         {
+            try 
+            {
             return db.users.Select(u=> new uservw()
             {
                  emp_id  = u.emp_id,
@@ -38,6 +40,11 @@ namespace ProjMgrAPI.Controllers
                   user_id = u.user_id
 
             });
+            }
+            catch(Exception)
+            {
+                throw;
+            }
         }
 
         // GET: api/Users/5
