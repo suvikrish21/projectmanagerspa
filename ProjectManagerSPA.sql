@@ -47,3 +47,6 @@ task_id int,
 constraint pk_users_userid primary key clustered (user_id)
 );
 
+
+
+select * from task
